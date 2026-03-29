@@ -1,0 +1,3117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InfinityTEA — Capacitação Profissional em TEA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+
+:root{
+  --ink:       #1A0F2E;
+  --ink-soft:  #2D1B4E;
+  --cream:     #F7F3EE;
+  --cream-dk:  #EDE7DC;
+  --gold:      #C9A96E;
+  --gold-lt:   #E8D5B0;
+  --plum:      #5C2D8F;
+  --plum-lt:   #7B4BB8;
+  --blush:     #E8C4C4;
+  --muted:     #8A7FA0;
+  --white:     #FFFFFF;
+  --border:    rgba(26,15,46,0.12);
+  --border-lt: rgba(201,169,110,0.3);
+}
+
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+
+/* PAGE SYSTEM */
+.page{display:none !important}
+.page.active{display:block !important}
+#page-player.active{display:flex !important}
+#page-login.active{display:flex !important}
+#page-mapautismo-cadastro.active .map-wrap{display:block}
+#page-mapautismo-gestor.active .gestor-wrap{display:block}
+
+/* ─── CURSOR ─── */
+body{cursor:none}
+#cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.15s ease;opacity:0.6}
+
+/* ─── NAV ─── */
+#public-nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 4rem;height:72px;
+  background:rgba(247,243,238,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.35rem;font-weight:700;letter-spacing:0.02em;
+  color:var(--ink);text-decoration:none;cursor:pointer;
+}
+.nav-logo em{font-style:italic;color:var(--plum)}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{
+  font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;cursor:pointer;
+  transition:color 0.25s;position:relative;
+}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.nav-area{
+  font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--plum);border:1px solid var(--plum);
+  padding:0.5rem 1.25rem;cursor:pointer;
+  transition:all 0.25s;background:transparent;
+}
+.nav-area:hover{background:var(--plum);color:var(--white)}
+
+/* ─── HERO ─── */
+#hero{
+  min-height:100vh;padding-top:72px;
+  background:var(--ink);
+  display:grid;grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;
+}
+.hero-left{
+  padding:8rem 4rem 6rem;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;z-index:2;
+}
+.hero-eyebrow{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:2.5rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-eyebrow::before{content:'';display:block;width:40px;height:1px;background:var(--gold)}
+.hero-h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,4.5vw,5rem);
+  font-weight:400;line-height:1.08;
+  color:var(--white);margin-bottom:2.5rem;
+}
+.hero-h1 em{font-style:italic;color:var(--gold)}
+.hero-body{
+  color:rgba(255,255,255,0.5);font-size:0.95rem;line-height:1.85;
+  max-width:380px;margin-bottom:3.5rem;font-weight:300;
+}
+.hero-actions{display:flex;gap:1.5rem;align-items:center}
+.btn-hero-primary{
+  font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  background:var(--gold);color:var(--ink);
+  padding:1rem 2.25rem;border:none;cursor:pointer;
+  transition:all 0.3s;
+}
+.btn-hero-primary:hover{background:var(--gold-lt);transform:translateY(-1px)}
+.btn-hero-ghost{
+  font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.5);cursor:pointer;
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  padding-bottom:2px;transition:all 0.3s;background:none;border-top:none;border-left:none;border-right:none;
+  font-family:'Jost',sans-serif;
+}
+.btn-hero-ghost:hover{color:white;border-color:white}
+.hero-right{
+  position:relative;overflow:hidden;
+  background:var(--ink-soft);
+}
+.hero-right-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:4rem;
+}
+.hero-bg-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Playfair Display',serif;
+  font-size:18vw;font-weight:900;font-style:italic;
+  color:rgba(255,255,255,0.03);white-space:nowrap;
+  pointer-events:none;user-select:none;
+}
+.hero-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(255,255,255,0.08)}
+.hero-stat-item{
+  padding:2rem 1.75rem;
+  border-right:1px solid rgba(255,255,255,0.08);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.hero-stat-item:nth-child(even){border-right:none}
+.hero-stat-item:nth-child(3),.hero-stat-item:nth-child(4){border-bottom:none}
+.hero-stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;font-weight:400;color:var(--gold);
+  line-height:1;margin-bottom:0.5rem;
+}
+.hero-stat-label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);font-weight:500}
+.hero-line{
+  position:absolute;top:0;bottom:0;left:50%;
+  width:1px;background:linear-gradient(to bottom,transparent,rgba(201,169,110,0.3) 30%,rgba(201,169,110,0.3) 70%,transparent);
+}
+
+/* ─── SECTIONS ─── */
+.section{padding:8rem 4rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-header{display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start;margin-bottom:6rem}
+.section-num{
+  font-family:'Playfair Display',serif;
+  font-size:5rem;font-weight:400;font-style:italic;
+  color:rgba(26,15,46,0.06);line-height:1;
+}
+.section-label-sm{
+  font-size:0.68rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.section-label-sm::before{content:'';width:28px;height:1px;background:var(--gold)}
+.section-h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,3vw,3.2rem);font-weight:400;line-height:1.15;
+  color:var(--ink);
+}
+.section-h2 em{font-style:italic;color:var(--plum)}
+
+/* ─── SOBRE ─── */
+#sobre{background:var(--white)}
+.sobre-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.sobre-text p{
+  color:var(--muted);line-height:1.9;font-size:0.95rem;font-weight:300;
+  margin-bottom:1.5rem;
+}
+.sobre-text p:first-child{font-size:1.1rem;color:var(--ink);font-weight:400;line-height:1.8}
+.sobre-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2.5rem}
+.tag{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  border:1px solid var(--border-lt);color:var(--muted);
+  padding:0.4rem 0.9rem;
+}
+.sobre-pillars{display:flex;flex-direction:column;gap:0;border:1px solid var(--border)}
+.pillar{
+  padding:2rem 2.5rem;
+  border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:48px 1fr;gap:1.5rem;align-items:start;
+  transition:background 0.3s;
+}
+.pillar:last-child{border-bottom:none}
+.pillar:hover{background:var(--cream)}
+.pillar-num{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-style:italic;color:var(--gold);
+  padding-top:2px;
+}
+.pillar-title{font-size:0.88rem;font-weight:600;letter-spacing:0.04em;color:var(--ink);margin-bottom:0.5rem}
+.pillar-desc{font-size:0.83rem;color:var(--muted);line-height:1.7;font-weight:300}
+
+/* ─── CURSOS ─── */
+#cursos{background:var(--cream)}
+.cursos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border)}
+.curso-item{
+  padding:3rem 2.5rem;border-right:1px solid var(--border);
+  position:relative;overflow:hidden;
+  transition:background 0.4s;
+  display:flex;flex-direction:column;
+}
+.curso-item:last-child{border-right:none}
+.curso-item::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.4s;
+}
+.curso-item:hover{background:var(--ink)}
+.curso-item:hover::before{transform:scaleX(1)}
+.curso-cat{
+  font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:2rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.curso-cat::before{content:'';width:16px;height:1px;background:var(--gold)}
+.curso-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;font-weight:400;line-height:1.2;
+  color:var(--ink);margin-bottom:1.5rem;
+  transition:color 0.3s;
+}
+.curso-item:hover .curso-title{color:var(--white)}
+.curso-desc{
+  font-size:0.85rem;color:var(--muted);line-height:1.75;font-weight:300;
+  margin-bottom:2.5rem;flex:1;
+  transition:color 0.3s;
+}
+.curso-item:hover .curso-desc{color:rgba(255,255,255,0.45)}
+.curso-footer{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto}
+.curso-price-wrap{}
+.curso-price{
+  font-family:'Playfair Display',serif;
+  font-size:2rem;font-weight:400;color:var(--ink);line-height:1;
+  transition:color 0.3s;
+}
+.curso-item:hover .curso-price{color:var(--gold)}
+.curso-price-note{font-size:0.7rem;color:var(--muted);letter-spacing:0.06em;margin-top:0.25rem;transition:color 0.3s}
+.curso-item:hover .curso-price-note{color:rgba(255,255,255,0.3)}
+.btn-curso{
+  font-size:0.68rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--plum);border:1px solid var(--plum);
+  padding:0.6rem 1.25rem;cursor:pointer;background:transparent;
+  transition:all 0.3s;white-space:nowrap;font-family:'Jost',sans-serif;
+  text-decoration:none;display:inline-block;
+}
+.curso-item:hover .btn-curso{border-color:var(--gold);color:var(--gold)}
+.btn-curso:hover{background:var(--plum);color:white}
+.curso-item:hover .btn-curso:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+
+/* ─── EQUIPE ─── */
+#equipe{background:var(--ink)}
+#equipe .section-h2{color:var(--white)}
+#equipe .section-h2 em{color:var(--gold)}
+#equipe .section-num{color:rgba(255,255,255,0.04)}
+.equipe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid rgba(255,255,255,0.08)}
+.equipe-item{
+  padding:3.5rem 2.5rem;
+  border-right:1px solid rgba(255,255,255,0.08);
+  position:relative;
+}
+.equipe-item:last-child{border-right:none}
+.equipe-index{
+  font-family:'Playfair Display',serif;
+  font-size:0.8rem;font-style:italic;color:var(--gold);
+  margin-bottom:3rem;display:block;
+}
+.equipe-nome{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:400;color:var(--white);
+  margin-bottom:0.4rem;line-height:1.2;
+}
+.equipe-cargo{
+  font-size:0.68rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.75rem;
+}
+.equipe-bio{font-size:0.83rem;color:rgba(255,255,255,0.38);line-height:1.8;font-weight:300}
+.equipe-line{
+  position:absolute;left:0;top:15%;bottom:15%;
+  width:1px;background:linear-gradient(to bottom,transparent,rgba(201,169,110,0.2),transparent);
+}
+
+/* ─── EBOOK ─── */
+#ebook{background:var(--cream-dk)}
+.ebook-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border)}
+.ebook-left{
+  padding:5rem;
+  background:var(--ink);
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.ebook-bg-word{
+  position:absolute;bottom:-2rem;left:-1rem;
+  font-family:'Playfair Display',serif;
+  font-size:9rem;font-weight:900;font-style:italic;
+  color:rgba(255,255,255,0.025);line-height:1;
+  pointer-events:none;user-select:none;
+}
+.ebook-badge{
+  font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(201,169,110,0.3);
+  padding:0.4rem 0.85rem;display:inline-block;width:fit-content;
+  margin-bottom:3rem;position:relative;z-index:1;
+}
+.ebook-title{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;font-weight:400;font-style:italic;
+  color:var(--white);line-height:1.2;
+  margin-bottom:1.5rem;position:relative;z-index:1;
+}
+.ebook-subtitle{font-size:0.88rem;color:rgba(255,255,255,0.4);line-height:1.8;font-weight:300;position:relative;z-index:1}
+.ebook-right{padding:5rem}
+.form-label{
+  display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:0.6rem;
+}
+.form-input{
+  width:100%;padding:0.9rem 0;
+  border:none;border-bottom:1px solid var(--border);
+  font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;
+  color:var(--ink);background:transparent;outline:none;
+  transition:border-color 0.25s;
+}
+.form-input:focus{border-color:var(--gold)}
+.form-input::placeholder{color:rgba(26,15,46,0.3)}
+.form-group{margin-bottom:2rem}
+.btn-form{
+  width:100%;font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  background:var(--plum);color:var(--white);border:none;
+  padding:1.1rem;cursor:pointer;margin-top:1rem;
+  transition:background 0.3s;font-family:'Jost',sans-serif;
+}
+.btn-form:hover{background:var(--ink)}
+.form-privacy{font-size:0.72rem;color:var(--muted);margin-top:1rem;text-align:center;letter-spacing:0.04em}
+
+/* ─── CONTATO ─── */
+#contato{background:var(--white)}
+.contato-layout{display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
+.contato-data{display:flex;flex-direction:column;gap:3rem}
+.contato-item{}
+.contato-item-label{
+  font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:0.6rem;
+}
+.contato-item-val{font-size:1.05rem;color:var(--ink);font-weight:400}
+.contato-item-val a{color:var(--ink);text-decoration:none;transition:color 0.2s}
+.contato-item-val a:hover{color:var(--plum)}
+.contato-form-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:400;color:var(--ink);
+  margin-bottom:3rem;
+}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--ink);padding:4rem;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,0.06)}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--white);font-weight:400}
+.footer-logo em{font-style:italic;color:var(--gold)}
+.footer-tagline{font-size:0.8rem;color:rgba(255,255,255,0.3);margin-top:0.5rem;font-weight:300;letter-spacing:0.04em}
+.footer-nav{display:flex;gap:3rem}
+.footer-nav-col{}
+.footer-nav-title{font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem}
+.footer-nav-col a{display:block;font-size:0.83rem;color:rgba(255,255,255,0.35);text-decoration:none;cursor:pointer;margin-bottom:0.6rem;transition:color 0.2s;font-weight:300}
+.footer-nav-col a:hover{color:rgba(255,255,255,0.7)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.2);font-weight:300;letter-spacing:0.04em}
+
+/* ─── WHATSAPP ─── */
+.wa-btn{
+  position:fixed;bottom:2.5rem;right:2.5rem;z-index:400;
+  display:flex;align-items:center;gap:0.75rem;
+  background:var(--ink);color:var(--white);
+  padding:0.85rem 1.5rem;border:1px solid rgba(255,255,255,0.1);
+  font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  text-decoration:none;transition:all 0.3s;
+  box-shadow:0 8px 32px rgba(0,0,0,0.25);
+}
+.wa-btn:hover{background:var(--plum);border-color:var(--plum);transform:translateY(-2px)}
+.wa-dot{width:7px;height:7px;background:#25D366;border-radius:50%;flex-shrink:0}
+
+/* ─── LOGIN ─── */
+#page-login{
+  min-height:100vh;
+  background:var(--cream);
+  align-items:center;justify-content:center;
+  padding:2rem;position:relative;
+}
+.login-deco{
+  position:absolute;top:0;right:0;width:50%;height:100%;
+  background:var(--ink);
+  clip-path:polygon(15% 0,100% 0,100% 100%,0 100%);
+  pointer-events:none;
+}
+.login-deco-text{
+  position:absolute;top:50%;right:6%;transform:translateY(-50%);
+  font-family:'Playfair Display',serif;
+  font-size:6vw;font-weight:900;font-style:italic;
+  color:rgba(255,255,255,0.03);line-height:1;
+  pointer-events:none;text-align:right;
+}
+.login-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  padding:4rem 3.5rem;
+  width:100%;max-width:460px;
+  position:relative;z-index:10;
+  box-shadow:0 24px 80px rgba(26,15,46,0.12);
+}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--ink);margin-bottom:0.4rem}
+.login-logo em{font-style:italic;color:var(--plum)}
+.login-sub{font-size:0.75rem;color:var(--muted);letter-spacing:0.08em;margin-bottom:3rem;font-weight:300}
+.login-tabs{display:flex;gap:0;margin-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.login-tab{
+  font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);padding:0.75rem 1.5rem;cursor:pointer;
+  border:none;background:transparent;font-family:'Jost',sans-serif;
+  transition:all 0.2s;border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.login-tab.active{color:var(--plum);border-bottom-color:var(--plum)}
+.login-input{
+  width:100%;padding:0.9rem 0;
+  border:none;border-bottom:1px solid var(--border);
+  font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;
+  color:var(--ink);background:transparent;outline:none;
+  transition:border-color 0.25s;margin-bottom:1.75rem;
+}
+.login-input:focus{border-color:var(--plum)}
+.login-input::placeholder{color:rgba(26,15,46,0.3)}
+.login-label{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.4rem}
+.btn-login{
+  width:100%;background:var(--plum);color:var(--white);
+  border:none;padding:1.1rem;
+  font-family:'Jost',sans-serif;font-weight:600;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
+  cursor:pointer;transition:background 0.3s;margin-top:0.75rem;
+}
+.btn-login:hover{background:var(--ink)}
+.login-error{font-size:0.78rem;color:#C0392B;margin-top:0.75rem;display:none;letter-spacing:0.04em}
+.login-demo{
+  margin-top:2rem;padding-top:1.75rem;border-top:1px solid var(--border);
+  font-size:0.75rem;color:var(--muted);font-weight:300;text-align:center;letter-spacing:0.04em;
+}
+.login-demo strong{color:var(--plum);font-weight:600}
+.login-back{text-align:center;margin-top:2rem;font-size:0.75rem;color:var(--muted)}
+.login-back a{color:var(--plum);cursor:pointer;font-weight:600;letter-spacing:0.04em}
+
+/* ─── DASHBOARD ─── */
+#page-dashboard{background:var(--cream);min-height:100vh}
+.dash-sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:270px;
+  background:var(--ink);
+  display:flex;flex-direction:column;z-index:200;
+  border-right:1px solid rgba(255,255,255,0.05);
+}
+.dash-logo{padding:2.25rem 2.25rem 2rem;border-bottom:1px solid rgba(255,255,255,0.05)}
+.dash-logo-text{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:400;color:var(--white)}
+.dash-logo-text em{font-style:italic;color:var(--gold)}
+.dash-nav{flex:1;padding:2rem 1.25rem;overflow-y:auto}
+.dash-nav-label{font-size:0.6rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.2);padding:0 0.75rem;margin-bottom:0.75rem;margin-top:1.5rem}
+.dash-nav-label:first-child{margin-top:0}
+.dash-nav-btn{
+  display:flex;align-items:center;gap:0.9rem;width:100%;
+  padding:0.8rem 0.75rem;font-size:0.82rem;font-weight:400;letter-spacing:0.04em;
+  color:rgba(255,255,255,0.4);background:transparent;border:none;
+  font-family:'Jost',sans-serif;cursor:pointer;transition:all 0.2s;text-align:left;
+}
+.dash-nav-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;flex-shrink:0}
+.dash-nav-btn:hover{color:rgba(255,255,255,0.8)}
+.dash-nav-btn.active{color:var(--gold)}
+.dash-user-area{padding:1.5rem 2rem;border-top:1px solid rgba(255,255,255,0.05)}
+.dash-user-row{display:flex;align-items:center;gap:0.9rem;margin-bottom:1rem}
+.dash-initials{
+  width:36px;height:36px;background:rgba(201,169,110,0.15);
+  border:1px solid rgba(201,169,110,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;font-weight:600;color:var(--gold);font-family:'Playfair Display',serif;flex-shrink:0;
+}
+.dash-uname{font-size:0.85rem;font-weight:500;color:var(--white)}
+.dash-urole{font-size:0.7rem;color:rgba(255,255,255,0.3);font-weight:300;letter-spacing:0.04em;margin-top:1px}
+.btn-logout{
+  width:100%;font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.08);
+  background:transparent;padding:0.6rem;cursor:pointer;
+  font-family:'Jost',sans-serif;transition:all 0.2s;
+}
+.btn-logout:hover{color:rgba(255,255,255,0.6);border-color:rgba(255,255,255,0.2)}
+.dash-main{margin-left:270px;padding:3.5rem}
+.dash-topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.dash-page-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:var(--ink)}
+.dash-page-sub{font-size:0.82rem;color:var(--muted);margin-top:0.25rem;font-weight:300}
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);margin-bottom:3.5rem}
+.dash-stat{padding:2rem 1.75rem;border-right:1px solid var(--border)}
+.dash-stat:last-child{border-right:none}
+.dash-stat-val{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:400;color:var(--ink);line-height:1}
+.dash-stat-key{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem}
+.dash-section-title{font-size:0.68rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+.dash-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.dash-curso-row{
+  display:flex;align-items:center;gap:2rem;
+  padding:1.75rem 2rem;background:var(--white);
+  border:1px solid var(--border);border-top:none;
+  cursor:pointer;transition:background 0.2s;
+}
+.dash-curso-row:first-of-type{border-top:1px solid var(--border)}
+.dash-curso-row:hover{background:var(--cream)}
+.dash-curso-cat{
+  font-size:0.62rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--gold);min-width:100px;
+}
+.dash-curso-name{font-size:0.92rem;font-weight:500;color:var(--ink);flex:1}
+.dash-curso-prog{font-size:0.78rem;color:var(--muted);min-width:80px;text-align:right}
+.dash-prog-bar{width:80px;height:2px;background:var(--border);flex-shrink:0}
+.dash-prog-fill{height:100%;background:var(--gold)}
+.btn-watch{
+  font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--plum);border:1px solid var(--plum);
+  padding:0.5rem 1.25rem;background:transparent;cursor:pointer;
+  font-family:'Jost',sans-serif;transition:all 0.2s;white-space:nowrap;flex-shrink:0;
+}
+.btn-watch:hover{background:var(--plum);color:white}
+
+/* ─── PLAYER ─── */
+#page-player{background:#0C0818;min-height:100vh;flex-direction:column}
+.player-topbar{
+  display:flex;align-items:center;gap:1.5rem;
+  padding:1.25rem 2rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.btn-back{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.1);
+  padding:0.5rem 1rem;background:transparent;cursor:pointer;
+  font-family:'Jost',sans-serif;transition:all 0.2s;
+}
+.btn-back:hover{color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.25)}
+.player-course-label{font-size:0.78rem;color:rgba(255,255,255,0.3);font-weight:300;letter-spacing:0.06em;flex:1}
+.player-grid{display:grid;grid-template-columns:1fr 320px;flex:1}
+.player-main{padding:2.5rem}
+.player-screen{
+  width:100%;aspect-ratio:16/9;background:#000;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:2rem;border:1px solid rgba(255,255,255,0.05);
+}
+.player-placeholder{text-align:center}
+.player-placeholder-icon{
+  width:56px;height:56px;border:1px solid rgba(255,255,255,0.12);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;cursor:pointer;transition:border-color 0.2s;
+}
+.player-placeholder-icon svg{width:18px;height:18px;fill:rgba(255,255,255,0.3)}
+.player-placeholder-icon:hover{border-color:var(--gold)}
+.player-placeholder p{font-size:0.78rem;color:rgba(255,255,255,0.2);letter-spacing:0.06em;font-weight:300}
+.player-lesson-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;font-weight:400;color:rgba(255,255,255,0.9);
+  margin-bottom:0.5rem;
+}
+.player-lesson-meta{font-size:0.75rem;color:rgba(255,255,255,0.25);letter-spacing:0.08em;font-weight:300}
+.player-sidebar{
+  border-left:1px solid rgba(255,255,255,0.06);
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+}
+.playlist-header{
+  padding:1.5rem 1.75rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
+}
+.pl-item{
+  display:flex;align-items:flex-start;gap:1.25rem;
+  padding:1.25rem 1.75rem;border-bottom:1px solid rgba(255,255,255,0.04);
+  cursor:pointer;transition:background 0.2s;
+}
+.pl-item:hover{background:rgba(255,255,255,0.03)}
+.pl-item.active{background:rgba(201,169,110,0.07);border-left:2px solid var(--gold)}
+.pl-num{
+  font-family:'Playfair Display',serif;
+  font-size:0.8rem;font-style:italic;color:rgba(255,255,255,0.2);
+  flex-shrink:0;padding-top:1px;min-width:20px;
+}
+.pl-item.active .pl-num{color:var(--gold)}
+.pl-title{font-size:0.82rem;color:rgba(255,255,255,0.5);font-weight:300;line-height:1.4;margin-bottom:0.25rem}
+.pl-item.active .pl-title{color:rgba(255,255,255,0.85)}
+.pl-dur{font-size:0.7rem;color:rgba(255,255,255,0.18);letter-spacing:0.04em}
+
+/* ─── PERFIL ─── */
+#page-perfil{background:var(--cream);min-height:100vh}
+.perfil-main{margin-left:270px;padding:3.5rem}
+.perfil-card{background:var(--white);border:1px solid var(--border);padding:3rem;max-width:560px}
+.perfil-header{display:flex;align-items:center;gap:2rem;margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+.perfil-avatar{
+  width:64px;height:64px;background:transparent;
+  border:1px solid var(--border-lt);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic;color:var(--gold);
+  flex-shrink:0;
+}
+.perfil-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--ink)}
+.perfil-role{font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-top:0.25rem}
+
+/* ─── NOTIF ─── */
+.notif{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--white);
+  padding:0.9rem 2rem;font-size:0.8rem;font-weight:400;letter-spacing:0.06em;
+  border:1px solid rgba(201,169,110,0.2);
+  z-index:9999;display:none;white-space:nowrap;
+  box-shadow:0 8px 32px rgba(26,15,46,0.3);
+}
+.notif.show{display:block;animation:fadeUp 0.3s ease}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.anim{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease}
+.anim.visible{opacity:1;transform:translateY(0)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  #public-nav{padding:0 2rem}
+  .nav-links{display:none}
+  #hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .section{padding:5rem 2rem}
+  .sobre-layout,.ebook-layout,.contato-layout{grid-template-columns:1fr}
+  .ebook-left{display:none}
+  .cursos-grid,.equipe-grid{grid-template-columns:1fr}
+  .curso-item,.equipe-item{border-right:none;border-bottom:1px solid var(--border)}
+  .dash-sidebar{display:none}
+  .dash-main,.perfil-main{margin-left:0;padding:2rem}
+  .dash-stats{grid-template-columns:repeat(2,1fr)}
+  .player-grid{grid-template-columns:1fr}
+  .player-sidebar{display:none}
+  #page-login .login-deco{display:none}
+  .section-header{grid-template-columns:1fr}
+  .section-num{display:none}
+  .hero-left{padding:4rem 2rem 3rem}
+}
+
+/* ─── MAP AUTISMO CADASTRO ─── */
+.map-wrap{background:var(--cream);min-height:100vh}
+.map-topbar{background:var(--ink);padding:1.25rem 4rem;display:flex;align-items:center;gap:2rem;border-bottom:1px solid rgba(201,169,110,0.15)}
+.map-topbar-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--white);cursor:pointer}
+.map-topbar-logo em{font-style:italic;color:var(--gold)}
+.map-topbar-title{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);padding-left:2rem;border-left:1px solid rgba(201,169,110,0.25);margin-left:0.5rem}
+.map-topbar-back{margin-left:auto;font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);background:transparent;border:1px solid rgba(255,255,255,0.1);padding:0.45rem 1rem;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s}
+.map-topbar-back:hover{color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.25)}
+.map-tabs{display:flex;background:var(--ink);border-bottom:1px solid rgba(201,169,110,0.12);padding:0 4rem}
+.map-tab{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);padding:1rem 0;margin-right:2.5rem;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;background:transparent;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif}
+.map-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.map-tab:hover:not(.active){color:rgba(255,255,255,0.6)}
+.mf-body{max-width:760px;margin:3rem auto;padding:0 2rem 4rem}
+.mf-intro{margin-bottom:3rem;padding:2rem 2.5rem;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold)}
+.mf-intro-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--ink);margin-bottom:0.6rem}
+.mf-intro-text{font-size:0.85rem;color:var(--muted);line-height:1.8;font-weight:300}
+.mf-section{background:var(--white);border:1px solid var(--border);margin-bottom:1rem;overflow:hidden}
+.mf-section-hdr{background:var(--cream);padding:0.7rem 1.5rem;border-bottom:1px solid var(--border);font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:0.75rem}
+.mf-section-hdr::before{content:'';width:16px;height:1px;background:var(--gold)}
+.mf-body-inner{padding:1.75rem 1.5rem}
+.mf-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.mf-row.full{grid-template-columns:1fr}
+.mf-row.three{grid-template-columns:1fr 1fr 1fr}
+.mf-row:last-child{margin-bottom:0}
+.mf-field{display:flex;flex-direction:column;gap:0.4rem}
+.mf-label{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.mf-input{padding:0.8rem 0;border:none;border-bottom:1px solid var(--border);font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:300;color:var(--ink);background:transparent;outline:none;transition:border-color 0.2s}
+.mf-input:focus{border-color:var(--gold)}
+.mf-input::placeholder{color:rgba(26,15,46,0.25)}
+select.mf-input{appearance:none;cursor:pointer}
+textarea.mf-input{resize:vertical;min-height:80px;padding-top:0.5rem}
+.nivel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:0.5rem}
+.nivel-card{border:1px solid var(--border);padding:1.25rem;cursor:pointer;transition:all 0.2s;text-align:center}
+.nivel-card:hover{border-color:var(--gold)}
+.nivel-card.selected{background:rgba(201,169,110,0.08);border-color:var(--gold)}
+.nivel-num{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:400;color:var(--plum);line-height:1;margin-bottom:0.4rem}
+.nivel-card.selected .nivel-num{color:var(--gold)}
+.nivel-desc{font-size:0.75rem;color:var(--muted);line-height:1.5;font-weight:300}
+.check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem}
+.check-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem}
+.check-item{display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--ink);padding:0.6rem 0.85rem;border:1px solid var(--border);cursor:pointer;transition:background 0.15s;font-weight:300}
+.check-item:hover{background:var(--cream)}
+.check-item input{cursor:pointer;accent-color:var(--plum)}
+.radio-card{display:flex;align-items:center;gap:0.7rem;padding:0.7rem 1rem;border:1px solid var(--border);cursor:pointer;font-size:0.8rem;color:var(--ink);transition:all 0.2s;font-weight:300}
+.radio-card:hover{border-color:var(--gold)}
+.radio-card input{accent-color:var(--plum);cursor:pointer}
+.mf-submit-area{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:2rem}
+.btn-mf-cancel{padding:0.8rem 1.5rem;border:1px solid var(--border);background:transparent;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s}
+.btn-mf-cancel:hover{border-color:var(--muted);color:var(--ink)}
+.btn-mf-submit{padding:0.8rem 2rem;border:none;background:var(--plum);color:var(--white);font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:background 0.3s}
+.btn-mf-submit:hover{background:var(--ink)}
+.mf-success{display:none;background:rgba(59,110,17,0.08);border:1px solid rgba(59,110,17,0.3);padding:1rem 1.5rem;font-size:0.85rem;color:#27500A;margin-bottom:1.5rem;font-weight:400}
+.mf-success.show{display:block}
+
+/* ─── MAP AUTISMO GESTOR ─── */
+.gestor-wrap{background:#f4f4f2;min-height:100vh}
+.gestor-hdr{background:#042C53;color:white;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:flex-end}
+.gestor-hdr h1{font-size:1.1rem;font-weight:500;margin-bottom:3px;font-family:'Jost',sans-serif}
+.gestor-hdr p{font-size:0.72rem;color:rgba(255,255,255,0.45);font-weight:300}
+.gestor-hdr-right{text-align:right;font-size:0.7rem;color:rgba(255,255,255,0.3)}
+.g-filter{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.6rem 1.5rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.g-filter-label{font-size:0.65rem;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-right:4px;white-space:nowrap}
+.g-sep{width:1px;height:18px;background:#e0e0e0;margin:0 4px}
+.g-chip{padding:4px 12px;border-radius:20px;font-size:0.72rem;cursor:pointer;border:0.5px solid #ccc;background:transparent;color:#666;transition:all 0.12s;font-family:'Jost',sans-serif;white-space:nowrap}
+.g-chip.active{background:var(--plum);border-color:var(--plum);color:white}
+.g-chip:hover:not(.active){background:#f4f4f2}
+select.g-sel{font-size:0.72rem;padding:4px 10px;border-radius:20px;border:0.5px solid #ccc;background:#fff;color:#1a1a1a;cursor:pointer;font-family:'Jost',sans-serif}
+.g-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#e0e0e0;border-bottom:1px solid #e0e0e0}
+.g-metric{background:#fff;padding:1.1rem 1.25rem}
+.g-metric .lbl{font-size:0.62rem;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px}
+.g-metric .val{font-size:1.75rem;font-weight:400;color:#1a1a1a;line-height:1;font-family:'Playfair Display',serif}
+.g-metric .sub{font-size:0.7rem;color:#888;margin-top:3px}
+.g-metric .sub.warn{color:#854F0B}
+.g-main{display:grid;grid-template-columns:1.4fr 1fr;background:#e0e0e0;gap:1px;border-bottom:1px solid #e0e0e0}
+.g-panel{background:#fff}
+.g-panel-hdr{padding:0.65rem 1.25rem;border-bottom:0.5px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between}
+.g-panel-title{font-size:0.8rem;font-weight:600;color:#1a1a1a;font-family:'Jost',sans-serif}
+.g-panel-sub{font-size:0.7rem;color:#888}
+.g-map-area{padding:0.75rem 1.25rem;min-height:250px}
+.g-result-count{font-size:0.72rem;color:#888;padding:6px 1.25rem;border-bottom:0.5px solid #e0e0e0}
+.g-result-count strong{color:#1a1a1a}
+.g-bairro{display:flex;align-items:center;padding:0.5rem 1.25rem;gap:8px;border-bottom:0.5px solid #e0e0e0;cursor:pointer;transition:background 0.1s}
+.g-bairro:hover{background:#f9f9f9}
+.g-bairro-name{font-size:0.78rem;color:#1a1a1a;flex:1;font-family:'Jost',sans-serif}
+.g-bairro-count{font-size:0.85rem;font-weight:600;color:var(--plum);min-width:28px;text-align:right;font-family:'Playfair Display',serif}
+.g-bairro-bar-wrap{flex:1;max-width:70px;height:3px;background:#f0f0f0;border-radius:2px}
+.g-bairro-bar{height:100%;background:var(--gold);border-radius:2px}
+.g-badge{font-size:0.62rem;padding:2px 5px;border-radius:3px;font-weight:600}
+.g-badge-n1{background:rgba(92,45,143,0.08);color:var(--plum)}
+.g-badge-n2{background:rgba(201,169,110,0.12);color:#7a5400}
+.g-badge-n3{background:rgba(192,57,43,0.08);color:#791F1F}
+.g-bottom{display:grid;grid-template-columns:repeat(3,1fr);background:#e0e0e0;gap:1px}
+.g-chart{background:#fff}
+.g-chart-inner{padding:0.75rem 1.25rem}
+.g-donut-wrap{display:flex;align-items:center;gap:1rem;margin-top:0.5rem}
+.g-legend{flex:1}
+.g-legend-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:0.7rem;color:#888}
+.g-legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.g-bar-mini{margin-top:0.5rem}
+.g-bar-item{display:flex;align-items:center;gap:6px;margin-bottom:7px;font-size:0.7rem}
+.g-bar-label{color:#888;min-width:90px;font-size:0.7rem}
+.g-bar-track{flex:1;height:4px;background:#f0f0f0;border-radius:2px}
+.g-bar-fill{height:100%;border-radius:2px;transition:width 0.4s}
+.g-bar-val{min-width:26px;text-align:right;color:#1a1a1a;font-weight:600;font-size:0.7rem;font-family:'Playfair Display',serif}
+.g-gestor-back{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:0.4rem 0.9rem;font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s}
+.g-gestor-back:hover{color:white;border-color:rgba(255,255,255,0.35)}
+.g-topnav{background:var(--ink);padding:0 2rem;display:flex;align-items:center;gap:1.5rem;border-bottom:1px solid rgba(201,169,110,0.12)}
+.g-topnav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--white);padding:1.1rem 0;border-right:1px solid rgba(255,255,255,0.08);padding-right:1.5rem;margin-right:0.5rem}
+.g-topnav-logo em{font-style:italic;color:var(--gold)}
+.g-topnav-tabs{display:flex;gap:0;flex:1}
+.g-topnav-tab{font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);padding:1.1rem 0;margin-right:2rem;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;background:transparent;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif}
+.g-topnav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.g-topnav-tab:hover:not(.active){color:rgba(255,255,255,0.6)}
+
+
+.map-wrap{background:var(--cream);min-height:100vh}
+.map-topbar{background:var(--ink);padding:1.25rem 4rem;display:flex;align-items:center;gap:2rem;border-bottom:1px solid rgba(201,169,110,0.15)}
+.map-topbar-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--white);cursor:pointer}
+.map-topbar-logo em{font-style:italic;color:var(--gold)}
+.map-topbar-title{font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);padding-left:2rem;border-left:1px solid rgba(201,169,110,0.25);margin-left:0.5rem}
+.map-topbar-back{margin-left:auto;font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);background:transparent;border:1px solid rgba(255,255,255,0.1);padding:0.45rem 1rem;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s}
+.map-topbar-back:hover{color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.25)}
+.map-tabs{display:flex;background:var(--ink);border-bottom:1px solid rgba(201,169,110,0.12);padding:0 4rem}
+.map-tab{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);padding:1rem 0;margin-right:2.5rem;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;background:transparent;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif}
+.map-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.map-tab:hover:not(.active){color:rgba(255,255,255,0.6)}
+.mf-body{max-width:760px;margin:3rem auto;padding:0 2rem 4rem}
+.mf-intro{margin-bottom:3rem;padding:2rem 2.5rem;background:var(--white);border:1px solid var(--border);border-left:3px solid var(--gold)}
+.mf-intro-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--ink);margin-bottom:0.6rem}
+.mf-intro-text{font-size:0.85rem;color:var(--muted);line-height:1.8;font-weight:300}
+.mf-section{background:var(--white);border:1px solid var(--border);margin-bottom:1rem;overflow:hidden}
+.mf-section-hdr{background:var(--cream);padding:0.7rem 1.5rem;border-bottom:1px solid var(--border);font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:0.75rem}
+.mf-section-hdr::before{content:'';width:16px;height:1px;background:var(--gold)}
+.mf-body-inner{padding:1.75rem 1.5rem}
+.mf-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.mf-row.full{grid-template-columns:1fr}
+.mf-row.three{grid-template-columns:1fr 1fr 1fr}
+.mf-row:last-child{margin-bottom:0}
+.mf-field{display:flex;flex-direction:column;gap:0.4rem}
+.mf-label{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.mf-input{padding:0.8rem 0;border:none;border-bottom:1px solid var(--border);font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:300;color:var(--ink);background:transparent;outline:none;transition:border-color 0.2s}
+.mf-input:focus{border-color:var(--gold)}
+.mf-input::placeholder{color:rgba(26,15,46,0.25)}
+select.mf-input{appearance:none;cursor:pointer}
+textarea.mf-input{resize:vertical;min-height:80px;padding-top:0.5rem}
+.nivel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-top:0.5rem}
+.nivel-card{border:1px solid var(--border);padding:1.25rem;cursor:pointer;transition:all 0.2s;text-align:center}
+.nivel-card:hover{border-color:var(--gold)}
+.nivel-card.selected{background:rgba(201,169,110,0.08);border-color:var(--gold)}
+.nivel-num{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:400;color:var(--plum);line-height:1;margin-bottom:0.4rem}
+.nivel-card.selected .nivel-num{color:var(--gold)}
+.nivel-desc{font-size:0.75rem;color:var(--muted);line-height:1.5;font-weight:300}
+.check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem}
+.check-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem}
+.check-item{display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--ink);padding:0.6rem 0.85rem;border:1px solid var(--border);cursor:pointer;transition:background 0.15s;font-weight:300}
+.check-item:hover{background:var(--cream)}
+.check-item input{cursor:pointer;accent-color:var(--plum)}
+.radio-card{display:flex;align-items:center;gap:0.7rem;padding:0.7rem 1rem;border:1px solid var(--border);cursor:pointer;font-size:0.8rem;color:var(--ink);transition:all 0.2s;font-weight:300}
+.radio-card:hover{border-color:var(--gold)}
+.radio-card input{accent-color:var(--plum);cursor:pointer}
+.mf-submit-area{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:2rem}
+.btn-mf-cancel{padding:0.8rem 1.5rem;border:1px solid var(--border);background:transparent;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s}
+.btn-mf-cancel:hover{border-color:var(--muted);color:var(--ink)}
+.btn-mf-submit{padding:0.8rem 2rem;border:none;background:var(--plum);color:var(--white);font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:background 0.3s}
+.btn-mf-submit:hover{background:var(--ink)}
+.mf-success{display:none;background:rgba(59,110,17,0.08);border:1px solid rgba(59,110,17,0.3);padding:1rem 1.5rem;font-size:0.85rem;color:#27500A;margin-bottom:1.5rem;font-weight:400}
+.mf-success.show{display:block}
+
+
+.gestor-wrap{background:#f4f4f2;min-height:100vh}
+.gestor-hdr{background:#042C53;color:white;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:flex-end}
+.gestor-hdr h1{font-size:1.1rem;font-weight:500;margin-bottom:3px;font-family:'Jost',sans-serif}
+.gestor-hdr p{font-size:0.72rem;color:rgba(255,255,255,0.45);font-weight:300}
+.gestor-hdr-right{text-align:right;font-size:0.7rem;color:rgba(255,255,255,0.3)}
+.g-filter{background:#fff;border-bottom:1px solid #e0e0e0;padding:0.6rem 1.5rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.g-filter-label{font-size:0.65rem;color:#888;text-transform:uppercase;letter-spacing:0.1em;margin-right:4px;white-space:nowrap}
+.g-sep{width:1px;height:18px;background:#e0e0e0;margin:0 4px}
+.g-chip{padding:4px 12px;border-radius:20px;font-size:0.72rem;cursor:pointer;border:0.5px solid #ccc;background:transparent;color:#666;transition:all 0.12s;font-family:'Jost',sans-serif;white-space:nowrap}
+.g-chip.active{background:var(--plum);border-color:var(--plum);color:white}
+.g-chip:hover:not(.active){background:#f4f4f2}
+select.g-sel{font-size:0.72rem;padding:4px 10px;border-radius:20px;border:0.5px solid #ccc;background:#fff;color:#1a1a1a;cursor:pointer;font-family:'Jost',sans-serif}
+.g-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#e0e0e0;border-bottom:1px solid #e0e0e0}
+.g-metric{background:#fff;padding:1.1rem 1.25rem}
+.g-metric .lbl{font-size:0.62rem;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px}
+.g-metric .val{font-size:1.75rem;font-weight:400;color:#1a1a1a;line-height:1;font-family:'Playfair Display',serif}
+.g-metric .sub{font-size:0.7rem;color:#888;margin-top:3px}
+.g-metric .sub.warn{color:#854F0B}
+.g-main{display:grid;grid-template-columns:1.4fr 1fr;background:#e0e0e0;gap:1px;border-bottom:1px solid #e0e0e0}
+.g-panel{background:#fff}
+.g-panel-hdr{padding:0.65rem 1.25rem;border-bottom:0.5px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between}
+.g-panel-title{font-size:0.8rem;font-weight:600;color:#1a1a1a;font-family:'Jost',sans-serif}
+.g-panel-sub{font-size:0.7rem;color:#888}
+.g-map-area{padding:0.75rem 1.25rem;min-height:250px}
+.g-result-count{font-size:0.72rem;color:#888;padding:6px 1.25rem;border-bottom:0.5px solid #e0e0e0}
+.g-result-count strong{color:#1a1a1a}
+.g-bairro{display:flex;align-items:center;padding:0.5rem 1.25rem;gap:8px;border-bottom:0.5px solid #e0e0e0;cursor:pointer;transition:background 0.1s}
+.g-bairro:hover{background:#f9f9f9}
+.g-bairro-name{font-size:0.78rem;color:#1a1a1a;flex:1;font-family:'Jost',sans-serif}
+.g-bairro-count{font-size:0.85rem;font-weight:600;color:var(--plum);min-width:28px;text-align:right;font-family:'Playfair Display',serif}
+.g-bairro-bar-wrap{flex:1;max-width:70px;height:3px;background:#f0f0f0;border-radius:2px}
+.g-bairro-bar{height:100%;background:var(--gold);border-radius:2px}
+.g-badge{font-size:0.62rem;padding:2px 5px;border-radius:3px;font-weight:600}
+.g-badge-n1{background:rgba(92,45,143,0.08);color:var(--plum)}
+.g-badge-n2{background:rgba(201,169,110,0.12);color:#7a5400}
+.g-badge-n3{background:rgba(192,57,43,0.08);color:#791F1F}
+.g-bottom{display:grid;grid-template-columns:repeat(3,1fr);background:#e0e0e0;gap:1px}
+.g-chart{background:#fff}
+.g-chart-inner{padding:0.75rem 1.25rem}
+.g-donut-wrap{display:flex;align-items:center;gap:1rem;margin-top:0.5rem}
+.g-legend{flex:1}
+.g-legend-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:0.7rem;color:#888}
+.g-legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.g-bar-mini{margin-top:0.5rem}
+.g-bar-item{display:flex;align-items:center;gap:6px;margin-bottom:7px;font-size:0.7rem}
+.g-bar-label{color:#888;min-width:90px;font-size:0.7rem}
+.g-bar-track{flex:1;height:4px;background:#f0f0f0;border-radius:2px}
+.g-bar-fill{height:100%;border-radius:2px;transition:width 0.4s}
+.g-bar-val{min-width:26px;text-align:right;color:#1a1a1a;font-weight:600;font-size:0.7rem;font-family:'Playfair Display',serif}
+.g-gestor-back{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);padding:0.4rem 0.9rem;font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s}
+.g-gestor-back:hover{color:white;border-color:rgba(255,255,255,0.35)}
+.g-topnav{background:var(--ink);padding:0 2rem;display:flex;align-items:center;gap:1.5rem;border-bottom:1px solid rgba(201,169,110,0.12)}
+.g-topnav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--white);padding:1.1rem 0;border-right:1px solid rgba(255,255,255,0.08);padding-right:1.5rem;margin-right:0.5rem}
+.g-topnav-logo em{font-style:italic;color:var(--gold)}
+.g-topnav-tabs{display:flex;gap:0;flex:1}
+.g-topnav-tab{font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);padding:1.1rem 0;margin-right:2rem;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;background:transparent;border-top:none;border-left:none;border-right:none;font-family:'Jost',sans-serif}
+.g-topnav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.g-topnav-tab:hover:not(.active){color:rgba(255,255,255,0.6)}
+.admin-wrap{background:var(--cream);min-height:100vh}
+.admin-topbar{background:var(--ink);padding:0 3rem;display:flex;align-items:center;gap:2rem;height:64px;border-bottom:1px solid rgba(201,169,110,0.15)}
+.admin-topbar-logo{font-family:'Playfair Display',serif;font-size:1.2rem;color:white}
+.admin-topbar-logo em{color:var(--gold);font-style:italic}
+.admin-topbar-title{font-size:0.68rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);padding-left:1.5rem;border-left:1px solid rgba(201,169,110,0.25)}
+.admin-topbar-out{margin-left:auto;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);background:transparent;border:1px solid rgba(255,255,255,0.1);padding:0.4rem 1rem;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s}
+.admin-topbar-out:hover{color:white;border-color:rgba(255,255,255,0.3)}
+.admin-body{max-width:1000px;margin:0 auto;padding:3rem 2rem}
+.admin-nav-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
+.admin-nav-tab{font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding:0.85rem 1.5rem;cursor:pointer;border:none;background:transparent;font-family:'Jost',sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s}
+.admin-nav-tab.active{color:var(--plum);border-bottom-color:var(--plum)}
+.admin-nav-tab:hover:not(.active){color:var(--ink)}
+.admin-tab-content{display:none}
+.admin-tab-content.active{display:block}
+.admin-section-title{font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem}
+.admin-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.admin-add-card{background:white;border:1px solid var(--border);padding:2.5rem;margin-bottom:2rem}
+.admin-add-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;color:var(--ink);margin-bottom:2rem}
+.admin-form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.admin-label{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.4rem}
+.admin-input{width:100%;padding:0.8rem 0;border:none;border-bottom:1px solid var(--border);font-family:'Jost',sans-serif;font-size:0.9rem;font-weight:300;color:var(--ink);background:transparent;outline:none;transition:border-color 0.2s}
+.admin-input:focus{border-color:var(--gold)}
+.admin-input::placeholder{color:rgba(26,15,46,0.25)}
+.admin-cursos-check{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;margin-top:0.5rem}
+.admin-curso-chk{display:flex;align-items:center;gap:0.6rem;padding:0.65rem 0.9rem;border:1px solid var(--border);cursor:pointer;font-size:0.8rem;color:var(--ink);transition:all 0.15s}
+.admin-curso-chk:hover{border-color:var(--gold)}
+.admin-curso-chk input{accent-color:var(--plum);cursor:pointer}
+.btn-admin-add{background:var(--plum);color:white;border:none;padding:0.85rem 2.5rem;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.25s;margin-top:1.5rem}
+.btn-admin-add:hover{background:var(--ink)}
+.admin-msg{font-size:0.8rem;margin-top:1rem;padding:0.7rem 1rem;display:none}
+.admin-msg.ok{background:rgba(39,80,10,0.08);border:1px solid rgba(39,80,10,0.2);color:#27500A;display:block}
+.admin-msg.err{background:rgba(192,57,43,0.08);border:1px solid rgba(192,57,43,0.2);color:#A32D2D;display:block}
+.admin-table{width:100%;border-collapse:collapse;background:white;border:1px solid var(--border)}
+.admin-table th{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:0.9rem 1.25rem;text-align:left;border-bottom:1px solid var(--border);background:var(--cream)}
+.admin-table td{font-size:0.83rem;padding:0.9rem 1.25rem;border-bottom:1px solid rgba(26,15,46,0.06);color:var(--ink);vertical-align:middle}
+.admin-table tr:last-child td{border-bottom:none}
+.admin-table tr:hover td{background:var(--cream)}
+.curso-tag{display:inline-block;font-size:0.62rem;font-weight:600;letter-spacing:0.06em;padding:0.2rem 0.6rem;border:1px solid var(--border-lt);color:var(--plum);margin:0.1rem;background:rgba(92,45,143,0.05)}
+.btn-admin-del{background:transparent;border:1px solid rgba(192,57,43,0.3);color:#A32D2D;font-family:'Jost',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.3rem 0.75rem;cursor:pointer;transition:all 0.2s}
+.btn-admin-del:hover{background:rgba(192,57,43,0.08)}
+.btn-admin-edit{background:transparent;border:1px solid var(--border-lt);color:var(--plum);font-family:'Jost',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:0.3rem 0.75rem;cursor:pointer;transition:all 0.2s;margin-right:0.4rem}
+.btn-admin-edit:hover{background:rgba(92,45,143,0.07)}
+.admin-empty{text-align:center;color:var(--muted);font-size:0.85rem;padding:3rem;font-weight:300}
+.video-curso-block{background:white;border:1px solid var(--border);margin-bottom:1.5rem}
+.video-curso-header{background:var(--cream);padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem}
+.video-curso-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;color:var(--ink);flex:1}
+.video-count{font-size:0.7rem;font-weight:600;letter-spacing:0.06em;color:var(--muted)}
+.video-count span{color:var(--plum);font-weight:700}
+.video-saved-badge{font-size:0.68rem;font-weight:600;color:#27500A;padding:0.2rem 0.6rem;background:rgba(39,80,10,0.08);border:1px solid rgba(39,80,10,0.2);display:none}
+.video-saved-badge.show{display:inline-block}
+.video-aula-row{display:grid;grid-template-columns:200px 1fr auto;gap:1rem;align-items:center;padding:0.85rem 1.5rem;border-bottom:0.5px solid var(--border)}
+.video-aula-row:last-child{border-bottom:none}
+.video-aula-name{font-size:0.82rem;font-weight:500;color:var(--ink)}
+.video-aula-dur{font-size:0.7rem;color:var(--muted);margin-top:0.15rem;font-weight:300}
+.video-url-input{width:100%;padding:0.5rem 0;border:none;border-bottom:1px solid var(--border);font-family:'Jost',sans-serif;font-size:0.78rem;color:var(--ink);background:transparent;outline:none;transition:border-color 0.2s}
+.video-url-input:focus{border-color:var(--gold)}
+.video-url-input::placeholder{color:rgba(26,15,46,0.22);font-size:0.75rem}
+.video-url-input.has-url{border-color:rgba(39,80,10,0.4);color:#1a5c1a}
+.video-preview-btn{font-size:0.62rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--plum);border:1px solid var(--border-lt);background:transparent;padding:0.3rem 0.7rem;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s;white-space:nowrap;text-decoration:none;display:inline-block}
+.video-preview-btn:hover{background:var(--lav-pale)}
+.video-preview-btn.disabled{opacity:0.35;pointer-events:none}
+.btn-salvar-videos{background:var(--plum);color:white;border:none;padding:0.75rem 2rem;font-family:'Jost',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:background 0.25s}
+.btn-salvar-videos:hover{background:var(--ink)}
+.video-hint{font-size:0.75rem;color:var(--muted);font-weight:300;line-height:1.6;padding:0.75rem 1.5rem;background:var(--cream);border-bottom:1px solid var(--border)}
+
+</style>
+
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ════════════════════════════════════════
+     SITE PÚBLICO
+════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+<nav id="public-nav">
+  <div class="nav-logo" onclick="scrollToSec('hero')">Infinity<em>TEA</em></div>
+  <ul class="nav-links">
+    <li><a onclick="scrollToSec('sobre')">Sobre</a></li>
+    <li><a onclick="scrollToSec('cursos')">Cursos</a></li>
+    <li><a onclick="scrollToSec('equipe')">Equipe</a></li>
+    <li><a onclick="scrollToSec('contato')">Contato</a></li>
+    <li><a onclick="scrollToSec('mapautismo')" style="color:var(--gold)">MapAutismo</a></li>
+  </ul>
+  <button class="nav-area" onclick="showPage('page-login')">Área do Aluno</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Capacitação Profissional</div>
+    <h1 class="hero-h1">
+      Formar quem<br>
+      cuida de <em>quem</em><br>
+      é diferente.
+    </h1>
+    <p class="hero-body">
+      Cursos especializados em TEA para profissionais da educação, saúde e famílias. Desenvolvidos por quem vive e pesquisa o espectro autista todos os dias.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-hero-primary" onclick="scrollToSec('cursos')">Ver formações</button>
+      <button class="btn-hero-ghost" onclick="scrollToSec('sobre')">Nossa história</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg-text">TEA</div>
+    <div class="hero-right-inner">
+      <div class="hero-stat-grid">
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">3</div>
+          <div class="hero-stat-label">Formações</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">∞</div>
+          <div class="hero-stat-label">Acesso vitalício</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">Online</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">3</div>
+          <div class="hero-stat-label">Especialistas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-line"></div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="section">
+  <div class="section-inner">
+    <div class="section-header anim">
+      <div class="section-num">01</div>
+      <div>
+        <div class="section-label-sm">Sobre a InfinityTEA</div>
+        <h2 class="section-h2">Uma jornada de <em>amor</em><br>que virou formação.</h2>
+      </div>
+    </div>
+    <div class="sobre-layout anim">
+      <div class="sobre-text">
+        <p>A InfinityTEA nasceu do desejo de transformar a forma como profissionais e famílias se relacionam com o Transtorno do Espectro Autista.</p>
+        <p>Acreditamos que o conhecimento é o primeiro passo para a inclusão genuína. Nossos cursos são desenvolvidos por especialistas que unem teoria e prática clínica, oferecendo uma formação completa, acessível e profundamente humanizada.</p>
+        <p>Cada conteúdo é pensado para fazer diferença real — dentro da sala de aula, no consultório, e em casa.</p>
+        <div class="sobre-tags">
+          <span class="tag">Online</span>
+          <span class="tag">Certificado</span>
+          <span class="tag">Acesso vitalício</span>
+          <span class="tag">Embasamento científico</span>
+        </div>
+      </div>
+      <div class="sobre-pillars">
+        <div class="pillar">
+          <span class="pillar-num">I.</span>
+          <div>
+            <div class="pillar-title">Metodologia centrada no aluno</div>
+            <div class="pillar-desc">Conteúdo pensado para quem aprende na correria do dia a dia. Aulas objetivas, aplicáveis e sem enrolação.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">II.</span>
+          <div>
+            <div class="pillar-title">Embasamento científico atual</div>
+            <div class="pillar-desc">Todo o conteúdo está alinhado às evidências mais recentes sobre TEA, comunicação e práticas de inclusão.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">III.</span>
+          <div>
+            <div class="pillar-title">Aprendizado em qualquer lugar</div>
+            <div class="pillar-desc">Plataforma acessível por celular, tablet ou computador. Sem prazo, sem pressão — no seu ritmo.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <span class="pillar-num">IV.</span>
+          <div>
+            <div class="pillar-title">Certificado reconhecido</div>
+            <div class="pillar-desc">Certificado de conclusão emitido ao final de cada curso para validar e registrar sua formação.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURSOS -->
+<section id="cursos" class="section" style="background:var(--cream-dk);padding-top:8rem;padding-bottom:8rem">
+  <div class="section-inner">
+    <div class="section-header anim">
+      <div class="section-num">02</div>
+      <div>
+        <div class="section-label-sm">Formações</div>
+        <h2 class="section-h2">Cursos <em>especializados</em><br>em TEA.</h2>
+      </div>
+    </div>
+    <div class="cursos-grid anim">
+      <div class="curso-item">
+        <div class="curso-cat">Educação</div>
+        <h3 class="curso-title">TEA na Escola</h3>
+        <p class="curso-desc">Estratégias práticas para professores e gestores incluírem alunos com TEA de forma efetiva e acolhedora no ambiente escolar. Da teoria à sala de aula.</p>
+        <div class="curso-footer">
+          <div class="curso-price-wrap">
+            <div class="curso-price">R$ 297</div>
+            <div class="curso-price-note">À vista · Acesso vitalício</div>
+          </div>
+          <a class="btn-curso" href="#" target="_blank">Inscrever-se</a>
+        </div>
+      </div>
+      <div class="curso-item">
+        <div class="curso-cat">Saúde</div>
+        <h3 class="curso-title">TEA na Saúde</h3>
+        <p class="curso-desc">Para profissionais da saúde que desejam atender pessoas com TEA com mais qualidade, empatia e embasamento técnico. Casos clínicos e protocolos práticos.</p>
+        <div class="curso-footer">
+          <div class="curso-price-wrap">
+            <div class="curso-price">R$ 297</div>
+            <div class="curso-price-note">À vista · Acesso vitalício</div>
+          </div>
+          <a class="btn-curso" href="#" target="_blank">Inscrever-se</a>
+        </div>
+      </div>
+      <div class="curso-item">
+        <div class="curso-cat">Comunicação</div>
+        <h3 class="curso-title">Comunicação e Empatia</h3>
+        <p class="curso-desc">Aprenda a se comunicar de forma mais clara e empática com pessoas no espectro autista. Para famílias, cuidadores e qualquer pessoa que queira se aproximar.</p>
+        <div class="curso-footer">
+          <div class="curso-price-wrap">
+            <div class="curso-price">R$ 197</div>
+            <div class="curso-price-note">À vista · Acesso vitalício</div>
+          </div>
+          <a class="btn-curso" href="#" target="_blank">Inscrever-se</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE -->
+<section id="equipe" class="section">
+  <div class="section-inner">
+    <div class="section-header anim">
+      <div class="section-num">03</div>
+      <div>
+        <div class="section-label-sm">Quem somos</div>
+        <h2 class="section-h2">As especialistas<br>por trás dos <em>cursos.</em></h2>
+      </div>
+    </div>
+    <div class="equipe-grid anim">
+      <div class="equipe-item">
+        <span class="equipe-index">01 / 03</span>
+        <div class="equipe-nome">Cláudia Ohanna</div>
+        <div class="equipe-cargo">Co-fundadora</div>
+        <div class="equipe-bio">Especialista em TEA com experiência em capacitação profissional. Apaixonada por transformar conhecimento técnico em impacto real na vida das pessoas.</div>
+      </div>
+      <div class="equipe-item">
+        <div class="equipe-line"></div>
+        <span class="equipe-index">02 / 03</span>
+        <div class="equipe-nome">Djeine Felix</div>
+        <div class="equipe-cargo">Co-fundadora</div>
+        <div class="equipe-bio">Educadora e pesquisadora com foco em inclusão escolar. Acredita que a escola pode e deve ser um espaço genuinamente acolhedor para todos os alunos.</div>
+      </div>
+      <div class="equipe-item">
+        <div class="equipe-line"></div>
+        <span class="equipe-index">03 / 03</span>
+        <div class="equipe-nome">Zélia Carvalho</div>
+        <div class="equipe-cargo">Co-fundadora</div>
+        <div class="equipe-bio">Profissional da saúde com vivência direta com TEA. Une rigor científico e humanidade em cada conteúdo que produz e ensina.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EBOOK -->
+<section id="ebook" class="section" style="padding-top:0;padding-bottom:0">
+  <div class="section-inner" style="max-width:100%;padding:0">
+    <div class="ebook-layout anim">
+      <div class="ebook-left">
+        <div class="ebook-bg-word">Guia</div>
+        <div style="position:relative;z-index:1">
+          <div class="ebook-badge">Material gratuito</div>
+          <div class="ebook-title">Guia completo<br>sobre o TEA</div>
+          <div class="ebook-subtitle">Sinais, diagnóstico, estratégias de inclusão e como apoiar quem você ama — tudo em um guia acessível e embasado.</div>
+        </div>
+      </div>
+      <div class="ebook-right">
+        <div class="section-label-sm" style="margin-bottom:2.5rem">Receba gratuitamente</div>
+        <div class="form-group">
+          <label class="form-label">Nome completo</label>
+          <input type="text" class="form-input" placeholder="Seu nome">
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-input" placeholder="seu@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Perfil</label>
+          <select class="form-input" style="appearance:none;cursor:pointer">
+            <option value="">Selecione seu perfil</option>
+            <option>Profissional da educação</option>
+            <option>Profissional da saúde</option>
+            <option>Familiar de pessoa com TEA</option>
+            <option>Estudante</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <button class="btn-form" onclick="showNotif('Enviado. Verifique sua caixa de entrada.')">Quero receber o guia</button>
+        <div class="form-privacy">Sem spam. Seus dados não são compartilhados.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="section">
+  <div class="section-inner">
+    <div class="section-header anim">
+      <div class="section-num">04</div>
+      <div>
+        <div class="section-label-sm">Contato</div>
+        <h2 class="section-h2">Fale com a<br><em>InfinityTEA.</em></h2>
+      </div>
+    </div>
+    <div class="contato-layout anim">
+      <div class="contato-data">
+        <div class="contato-item">
+          <div class="contato-item-label">E-mail</div>
+          <div class="contato-item-val"><a href="/cdn-cgi/l/email-protection#8fece0e1fbeefbe0a1e6e1e9e6e1e6fbf6fbeaeecfe8e2eee6e3a1ece0e2"><span class="__cf_email__" data-cfemail="91f2feffe5f0e5febff8fff7f8fff8e5e8e5f4f0d1f6fcf0f8fdbff2fefc">[email&#160;protected]</span></a></div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-item-label">WhatsApp</div>
+          <div class="contato-item-val"><a href="https://wa.me/5543996739300" target="_blank">(43) 99673-9300</a></div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-item-label">Instagram</div>
+          <div class="contato-item-val"><a href="https://instagram.com/infinitytea_" target="_blank">@infinitytea_</a></div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-item-label">Site</div>
+          <div class="contato-item-val"><a href="https://www.infinitytea.com.br" target="_blank">www.infinitytea.com.br</a></div>
+        </div>
+      </div>
+      <div>
+        <div class="contato-form-title">Envie uma mensagem</div>
+        <div class="form-group">
+          <label class="form-label">Nome</label>
+          <input type="text" class="form-input" placeholder="Seu nome">
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-input" placeholder="seu@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensagem</label>
+          <textarea class="form-input" rows="4" placeholder="Como podemos ajudar?" style="resize:vertical;padding-top:0.5rem"></textarea>
+        </div>
+        <button class="btn-form" onclick="showNotif('Mensagem enviada. Em breve retornaremos.')">Enviar mensagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ─── MAPAUTISMO SECTION ─── -->
+<section id="mapautismo" class="section" style="background:var(--ink);padding-top:8rem;padding-bottom:8rem">
+  <div class="section-inner">
+    <div class="section-header anim">
+      <div class="section-num" style="color:rgba(255,255,255,0.04)">05</div>
+      <div>
+        <div class="section-label-sm">Iniciativa social</div>
+        <h2 class="section-h2" style="color:var(--white)">Map<em>Autismo</em> —<br>visibilidade que<br>gera políticas públicas.</h2>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start" class="anim">
+      <div>
+        <p style="color:rgba(255,255,255,0.55);line-height:1.9;font-size:1.05rem;font-weight:300;margin-bottom:1.75rem">
+          Cada criança com TEA é uma demanda real por recursos, suporte escolar e acesso a terapias. O MapAutismo transforma esses dados em informação estratégica para gestores municipais.
+        </p>
+        <p style="color:rgba(255,255,255,0.4);line-height:1.85;font-size:0.92rem;font-weight:300;margin-bottom:2.5rem">
+          Mães, pais e responsáveis cadastram seus filhos de forma simples e segura. Os dados — sempre anônimos e agregados — alimentam um painel interativo que mostra onde estão as crianças, quais terapias acessam, e onde faltam recursos.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:1.25rem;margin-bottom:3rem">
+          <div style="display:flex;align-items:flex-start;gap:1.25rem;padding:1.5rem;border:1px solid rgba(201,169,110,0.15)">
+            <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--gold);flex-shrink:0;padding-top:2px">I.</div>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:0.3rem">Mães cadastram seus filhos</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.35);line-height:1.6;font-weight:300">Formulário simples com dados do diagnóstico, terapias e situação escolar. Sem identificação pública da criança.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:1.25rem;padding:1.5rem;border:1px solid rgba(201,169,110,0.15)">
+            <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--gold);flex-shrink:0;padding-top:2px">II.</div>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:0.3rem">Dados viram inteligência territorial</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.35);line-height:1.6;font-weight:300">O painel mostra distribuição por bairro, acesso a terapias, rede escolar e nível do espectro — por município.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:1.25rem;padding:1.5rem;border:1px solid rgba(201,169,110,0.15)">
+            <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--gold);flex-shrink:0;padding-top:2px">III.</div>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:0.3rem">Gestores tomam decisões com dados</div>
+              <div style="font-size:0.8rem;color:rgba(255,255,255,0.35);line-height:1.6;font-weight:300">Secretários de saúde e educação acessam o dashboard e identificam onde investir em acompanhamento e infraestrutura.</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <button onclick="showPage('page-mapautismo-cadastro')" style="font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;background:var(--gold);color:var(--ink);padding:1rem 2rem;border:none;cursor:pointer;transition:all 0.3s;font-family:'Jost',sans-serif">Cadastrar minha criança</button>
+          <button onclick="showPage('page-mapautismo-gestor')" style="font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);background:transparent;border:1px solid rgba(255,255,255,0.15);padding:1rem 2rem;cursor:pointer;transition:all 0.3s;font-family:'Jost',sans-serif">Sou gestor — ver painel</button>
+        </div>
+      </div>
+      <div style="border:1px solid rgba(201,169,110,0.15);overflow:hidden">
+        <!-- mini preview do dashboard -->
+        <div style="background:#042C53;padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="font-size:0.7rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem">Painel do Gestor — prévia</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.3);font-weight:300">MapAutismo · Paraná</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:rgba(255,255,255,0.03)">
+          <div style="padding:1.5rem;border-right:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06)">
+            <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.5rem">Crianças</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--white);line-height:1">1.847</div>
+          </div>
+          <div style="padding:1.5rem;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.5rem">Sem terapia</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;color:#C0392B;line-height:1">776</div>
+          </div>
+          <div style="padding:1.5rem;border-right:1px solid rgba(255,255,255,0.06)">
+            <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.5rem">Rede pública</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);line-height:1">78%</div>
+          </div>
+          <div style="padding:1.5rem">
+            <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.5rem">Municípios</div>
+            <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--white);line-height:1">4</div>
+          </div>
+        </div>
+        <div style="padding:1.25rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06)">
+          <div style="font-size:0.7rem;color:rgba(255,255,255,0.2);margin-bottom:0.75rem;letter-spacing:0.06em">Acesso a terapias — % dos cadastrados</div>
+          <div style="display:flex;flex-direction:column;gap:0.6rem">
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.35);min-width:90px;font-weight:300">Fonoaudiologia</div>
+              <div style="flex:1;height:4px;background:rgba(255,255,255,0.08);border-radius:2px"><div style="width:71%;height:100%;background:var(--gold);border-radius:2px"></div></div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);min-width:28px;text-align:right">71%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.35);min-width:90px;font-weight:300">ABA</div>
+              <div style="flex:1;height:4px;background:rgba(255,255,255,0.08);border-radius:2px"><div style="width:58%;height:100%;background:var(--plum-lt);border-radius:2px"></div></div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);min-width:28px;text-align:right">58%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.35);min-width:90px;font-weight:300">Nenhuma</div>
+              <div style="flex:1;height:4px;background:rgba(255,255,255,0.08);border-radius:2px"><div style="width:42%;height:100%;background:#C0392B;border-radius:2px"></div></div>
+              <div style="font-size:0.72rem;color:#C0392B;min-width:28px;text-align:right">42%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Infinity<em>TEA</em></div>
+        <div class="footer-tagline">Capacitação profissional em Transtorno do Espectro Autista</div>
+      </div>
+      <div class="footer-nav">
+        <div class="footer-nav-col">
+          <div class="footer-nav-title">Site</div>
+          <a onclick="scrollToSec('sobre')">Sobre</a>
+          <a onclick="scrollToSec('cursos')">Cursos</a>
+          <a onclick="scrollToSec('equipe')">Equipe</a>
+          <a onclick="scrollToSec('contato')">Contato</a>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-nav-title">Plataforma</div>
+          <a onclick="showPage('page-login')">Área do aluno</a>
+          <a onclick="scrollToSec('ebook')">E-book gratuito</a>
+          <a onclick="showPage('page-mapautismo-cadastro')" style="color:var(--gold)">MapAutismo — Cadastro</a>
+          <a onclick="showPage('page-mapautismo-gestor')" style="color:var(--gold)">MapAutismo — Gestor</a>
+        </div>
+        <div class="footer-nav-col">
+          <div class="footer-nav-title">Contato</div>
+          <a href="/cdn-cgi/l/email-protection#aecdc1c0dacfdac180c7c0c8c7c0c7dad7dacbcfeec9c3cfc7c280cdc1c3">E-mail</a>
+          <a href="https://wa.me/5543996739300" target="_blank">WhatsApp</a>
+          <a href="https://instagram.com/infinitytea_" target="_blank">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 InfinityTEA. Todos os direitos reservados.</div>
+      <div class="footer-copy">(43) 99673-9300 · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c2a1adacb6a3b6adecabaca4abacabb6bbb6a7a382a5afa3abaeeca1adaf">[email&#160;protected]</a></div>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-btn" href="https://wa.me/5543996739300" target="_blank">
+  <span class="wa-dot"></span>
+  WhatsApp
+</a>
+
+</div><!-- /page-home -->
+
+<!-- ════════════════════════════════════════
+     LOGIN
+════════════════════════════════════════ -->
+<div id="page-login" class="page">
+  <div class="login-deco"></div>
+  <div class="login-deco-text">Infinity<br>TEA</div>
+  <div class="login-card">
+    <div class="login-logo">Infinity<em>TEA</em></div>
+    <div class="login-sub">Área exclusiva para alunos</div>
+    <div class="login-tabs">
+      <button class="login-tab active" id="tab-entrar" onclick="switchTab('entrar')">Entrar</button>
+      <button class="login-tab" id="tab-cadastro" onclick="switchTab('cadastro')">Criar conta</button>
+      <button class="login-tab" id="tab-senha" onclick="switchTab('senha')">Esqueci a senha</button>
+    </div>
+
+    <div id="form-login">
+      <label class="login-label">E-mail</label>
+      <input type="email" class="login-input" id="l-email" placeholder="seu@email.com">
+      <label class="login-label">Senha</label>
+      <input type="password" class="login-input" id="l-senha" placeholder="••••••••">
+      <button class="btn-login" id="btn-entrar" onclick="doLogin()">Entrar na plataforma</button>
+      <div class="login-error" id="l-error"></div>
+    </div>
+
+    <div id="form-cadastro" style="display:none">
+      <label class="login-label">Nome completo</label>
+      <input type="text" class="login-input" id="c-nome" placeholder="Seu nome">
+      <label class="login-label">E-mail</label>
+      <input type="email" class="login-input" id="c-email" placeholder="seu@email.com">
+      <label class="login-label">Senha</label>
+      <input type="password" class="login-input" id="c-senha" placeholder="Mínimo 6 caracteres">
+      <button class="btn-login" id="btn-cadastrar" onclick="doRegister()">Criar conta grátis</button>
+      <div class="login-error" id="c-error"></div>
+      <div class="login-demo" style="margin-top:1rem">Ao se cadastrar você recebe acesso gratuito ao curso <strong>Comunicação e Empatia</strong>.</div>
+    </div>
+
+    <div id="form-senha" style="display:none">
+      <label class="login-label">Seu e-mail</label>
+      <input type="email" class="login-input" id="l-reset-email" placeholder="seu@email.com">
+      <button class="btn-login" onclick="doResetSenha()">Enviar link de redefinição</button>
+      <div class="login-error" id="l-error-reset"></div>
+    </div>
+
+    <div class="login-back"><a onclick="showPage('page-home')">← Voltar ao site</a></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     DASHBOARD
+════════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <div class="dash-sidebar">
+    <div class="dash-logo"><div class="dash-logo-text">Infinity<em>TEA</em></div></div>
+    <nav class="dash-nav">
+      <div class="dash-nav-label">Navegação</div>
+      <button class="dash-nav-btn active">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Início
+      </button>
+      <button class="dash-nav-btn" onclick="showPage('page-perfil')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Meu Perfil
+      </button>
+      <button class="dash-nav-btn" onclick="showPage('page-home')">
+        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Voltar ao site
+      </button>
+    </nav>
+    <div class="dash-user-area">
+      <div class="dash-user-row">
+        <div class="dash-initials" id="dash-initials">A</div>
+        <div>
+          <div class="dash-uname" id="dash-uname">Aluno</div>
+          <div class="dash-urole">Aluno</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">Encerrar sessão</button>
+    </div>
+  </div>
+
+  <div class="dash-main">
+    <div class="dash-topbar">
+      <div>
+        <div class="dash-page-title" id="dash-hello">Bem-vindo</div>
+        <div class="dash-page-sub">Continue de onde parou.</div>
+      </div>
+    </div>
+
+    <div class="dash-stats">
+      <div class="dash-stat"><div class="dash-stat-val" id="dash-stat-total">—</div><div class="dash-stat-key">Cursos liberados</div></div>
+      <div class="dash-stat"><div class="dash-stat-val">0</div><div class="dash-stat-key">Aulas concluídas</div></div>
+      <div class="dash-stat"><div class="dash-stat-val">0</div><div class="dash-stat-key">Certificados</div></div>
+      <div class="dash-stat"><div class="dash-stat-val">—</div><div class="dash-stat-key">Horas de estudo</div></div>
+    </div>
+
+    <div class="dash-section-title">Minhas formações</div>
+    <div id="dash-cursos-list">
+      <div style="color:var(--muted);font-size:0.85rem;padding:2rem 0;font-weight:300">Carregando seus cursos...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PLAYER
+════════════════════════════════════════ -->
+<div id="page-player" class="page">
+  <div class="player-topbar">
+    <button class="btn-back" onclick="showPage('page-dashboard')">← Voltar</button>
+    <div class="player-course-label" id="player-course-label">Curso</div>
+  </div>
+  <div class="player-grid">
+    <div class="player-main">
+      <div class="player-screen">
+        <div class="player-placeholder">
+          <div class="player-placeholder-icon">
+            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <p>Selecione uma aula</p>
+        </div>
+      </div>
+      <div class="player-lesson-title" id="player-lesson-title">Selecione uma aula para começar</div>
+      <div class="player-lesson-meta" id="player-lesson-meta"></div>
+    </div>
+    <div class="player-sidebar">
+      <div class="playlist-header" id="pl-header">Aulas do curso</div>
+      <div id="pl-items"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PERFIL
+════════════════════════════════════════ -->
+<div id="page-perfil" class="page">
+  <div class="dash-sidebar">
+    <div class="dash-logo"><div class="dash-logo-text">Infinity<em>TEA</em></div></div>
+    <nav class="dash-nav">
+      <div class="dash-nav-label">Navegação</div>
+      <button class="dash-nav-btn" onclick="showPage('page-dashboard')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Início
+      </button>
+      <button class="dash-nav-btn active">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Meu Perfil
+      </button>
+      <button class="dash-nav-btn" onclick="showPage('page-home')">
+        <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Voltar ao site
+      </button>
+    </nav>
+    <div class="dash-user-area">
+      <div class="dash-user-row">
+        <div class="dash-initials" id="p-initials">A</div>
+        <div>
+          <div class="dash-uname" id="p-uname">Aluno</div>
+          <div class="dash-urole">Aluno</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">Encerrar sessão</button>
+    </div>
+  </div>
+  <div class="perfil-main">
+    <div class="dash-page-title" style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:var(--ink);margin-bottom:2.5rem">Meu Perfil</div>
+    <div class="perfil-card">
+      <div class="perfil-header">
+        <div class="perfil-avatar" id="p-avatar">A</div>
+        <div>
+          <div class="perfil-name" id="p-name-big">Aluno</div>
+          <div class="perfil-role">Aluno InfinityTEA</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nome completo</label>
+        <input type="text" class="form-input" id="p-nome-input" placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input type="email" class="form-input" id="p-email-input" disabled style="opacity:0.45">
+      </div>
+      <button class="btn-form" onclick="savePerfil()">Salvar alterações</button>
+      <div style="margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border)">
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;color:var(--ink);margin-bottom:1.5rem">Alterar senha</div>
+        <div class="form-group">
+          <label class="form-label">Senha atual</label>
+          <input type="password" class="form-input" id="p-senha-atual" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nova senha</label>
+          <input type="password" class="form-input" id="p-senha-nova" placeholder="Mínimo 6 caracteres">
+        </div>
+        <button class="btn-form" style="background:var(--ink)" onclick="doAlterarSenha()">Alterar senha</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     ADMIN — PAINEL DE GESTÃO
+════════════════════════════════════════ -->
+<div id="page-admin" class="page">
+<div class="admin-wrap">
+  <div class="admin-topbar">
+    <div class="admin-topbar-logo">Infinity<em>TEA</em></div>
+    <div class="admin-topbar-title">Painel Admin</div>
+    <button class="admin-topbar-out" onclick="doLogout()">Sair</button>
+  </div>
+  <div class="admin-body">
+
+    <!-- Abas de navegação -->
+    <div class="admin-nav-tabs">
+      <button class="admin-nav-tab active" id="atab-alunos" onclick="adminSwitchTab('alunos')">Alunos</button>
+      <button class="admin-nav-tab" id="atab-videos" onclick="adminSwitchTab('videos')">Vídeos dos Cursos</button>
+    </div>
+
+    <!-- ABA: ALUNOS -->
+    <div class="admin-tab-content active" id="atab-content-alunos">
+      <div class="admin-add-card">
+        <div class="admin-add-title">Adicionar aluno e liberar cursos</div>
+        <div class="admin-form-row">
+          <div>
+            <label class="admin-label">Nome completo</label>
+            <input class="admin-input" id="a-nome" type="text" placeholder="Nome do aluno">
+          </div>
+          <div>
+            <label class="admin-label">E-mail</label>
+            <input class="admin-input" id="a-email" type="email" placeholder="email@exemplo.com">
+          </div>
+        </div>
+        <div class="admin-form-row">
+          <div>
+            <label class="admin-label">Senha provisória</label>
+            <input class="admin-input" id="a-senha" type="text" placeholder="Mínimo 6 caracteres">
+          </div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <label class="admin-label">Cursos liberados</label>
+          <div class="admin-cursos-check">
+            <label class="admin-curso-chk"><input type="checkbox" id="chk-tea-escola" value="tea-escola"> TEA na Escola</label>
+            <label class="admin-curso-chk"><input type="checkbox" id="chk-tea-saude" value="tea-saude"> TEA na Saúde</label>
+            <label class="admin-curso-chk"><input type="checkbox" id="chk-comunicacao" value="comunicacao"> Comunicação e Empatia</label>
+          </div>
+        </div>
+        <button class="btn-admin-add" onclick="adminAddAluno()">Cadastrar aluno</button>
+        <div class="admin-msg" id="admin-msg"></div>
+      </div>
+
+      <div class="admin-section-title">Alunos cadastrados</div>
+      <div id="admin-alunos-wrap">
+        <div class="admin-empty">Carregando...</div>
+      </div>
+    </div>
+
+    <!-- ABA: VÍDEOS -->
+    <div class="admin-tab-content" id="atab-content-videos">
+      <div style="font-size:0.82rem;color:var(--muted);margin-bottom:2rem;line-height:1.7;font-weight:300">
+        Cole o link do Google Drive de cada aula. O link pode ser qualquer formato — o sistema converte automaticamente para embed.
+        Lembre de deixar o vídeo no Drive com permissão <strong style="color:var(--ink)">"Qualquer pessoa com o link pode ver"</strong>.
+      </div>
+      <div id="admin-videos-wrap"><!-- preenchido por JS --></div>
+      <button class="btn-salvar-videos" onclick="adminSalvarVideos()">Salvar todos os links</button>
+      <div class="admin-msg" id="admin-videos-msg" style="margin-top:1rem"></div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<!-- ════════════════════════════════════════
+     MAPAUTISMO — CADASTRO (PAIS)
+════════════════════════════════════════ -->
+<div id="page-mapautismo-cadastro" class="page">
+
+<div class="map-wrap">
+  <div class="map-topbar">
+    <div class="map-topbar-logo" onclick="showPage('page-home')">Infinity<em>TEA</em></div>
+    <div class="map-topbar-title">MapAutismo</div>
+    <button class="map-topbar-back" onclick="showPage('page-home')">← Voltar ao site</button>
+    <button class="map-topbar-back" onclick="showMapLgpd()" style="border-color:rgba(201,169,110,0.3);color:var(--gold)">Solicitar exclusão de dados</button>
+  </div>
+  <div class="map-tabs">
+    <button class="map-tab active" onclick="showPage('page-mapautismo-cadastro')">Cadastro — Pais e responsáveis</button>
+    <button class="map-tab" onclick="showPage('page-mapautismo-gestor')">Painel do Gestor</button>
+  </div>
+  <div class="mf-body">
+    <div class="mf-success" id="mf-success">Cadastro realizado com sucesso. Obrigado por contribuir com o mapeamento — sua participação ajuda gestores a destinar mais recursos para sua região.</div>
+    <div class="mf-intro">
+      <div class="mf-intro-title">Cadastre sua criança no MapAutismo</div>
+      <div class="mf-intro-text">Seus dados ajudam prefeituras e secretarias de saúde a entender as necessidades reais da sua região e a destinar recursos de forma mais eficiente. Todas as informações são anônimas e agregadas — nenhum dado individual é publicado.</div>
+    </div>
+
+    <div class="mf-section">
+      <div class="mf-section-hdr">Dados da criança</div>
+      <div class="mf-body-inner">
+        <div class="mf-row">
+          <div class="mf-field"><label class="mf-label">Nome completo</label><input type="text" id="mf-nome-crianca" class="mf-input" placeholder="Nome da criança"></div>
+          <div class="mf-field"><label class="mf-label">Data de nascimento</label><input type="date" id="mf-data-nasc" class="mf-input"></div>
+        </div>
+        <div class="mf-row three">
+          <div class="mf-field"><label class="mf-label">Sexo <span style="color:#A32D2D">*</span></label>
+            <select id="mf-sexo" class="mf-input">
+              <option value="">Selecione</option>
+              <option>Masculino</option><option>Feminino</option><option>Prefiro não informar</option>
+            </select>
+          </div>
+          <div class="mf-field"><label class="mf-label">Ano do diagnóstico</label><input type="number" id="mf-ano-diag" class="mf-input" placeholder="Ex: 2022" min="1990" max="2030"></div>
+          <div class="mf-field"><label class="mf-label">CID-10 / CID-11</label><input type="text" id="mf-cid" class="mf-input" placeholder="Ex: F84.0"></div>
+        </div>
+        <div class="mf-row three">
+          <div class="mf-field"><label class="mf-label">Estado</label>
+            <select id="mf-estado" class="mf-input">
+              <option>Paraná</option><option>São Paulo</option><option>Minas Gerais</option><option>Santa Catarina</option><option>Rio Grande do Sul</option><option>Outro</option>
+            </select>
+          </div>
+          <div class="mf-field"><label class="mf-label">Município <span style="color:#A32D2D">*</span></label>
+            <input type="text" id="mf-municipio" class="mf-input" placeholder="Nome da cidade" list="mf-municipios-list">
+            <datalist id="mf-municipios-list">
+              <option>Ibaiti</option><option>Curitiba</option><option>Londrina</option><option>Maringá</option><option>Cascavel</option><option>Foz do Iguaçu</option><option>Ponta Grossa</option>
+            </datalist>
+          </div>
+          <div class="mf-field"><label class="mf-label">Bairro <span style="color:#A32D2D">*</span></label><input type="text" id="mf-bairro" class="mf-input" placeholder="Ex: Centro"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mf-section">
+      <div class="mf-section-hdr">Nível do espectro <span style="color:#A32D2D">*</span></div>
+      <div class="mf-body-inner">
+        <div style="font-size:0.75rem;color:var(--muted);margin-bottom:1rem;font-weight:300">Conforme diagnóstico médico.</div>
+        <div class="nivel-grid" id="mf-nivel-grid">
+          <div class="nivel-card selected" data-nivel="1" onclick="selectNivel(this)"><div class="nivel-num">1</div><div class="nivel-desc">Suporte leve — comunicação funcional com dificuldades pontuais</div></div>
+          <div class="nivel-card" data-nivel="2" onclick="selectNivel(this)"><div class="nivel-num">2</div><div class="nivel-desc">Suporte substancial — dificuldades marcadas de comunicação</div></div>
+          <div class="nivel-card" data-nivel="3" onclick="selectNivel(this)"><div class="nivel-num">3</div><div class="nivel-desc">Suporte intenso — déficits severos, comunicação muito limitada</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mf-section">
+      <div class="mf-section-hdr">Comorbidades</div>
+      <div class="mf-body-inner">
+        <div class="check-grid" id="mf-comorbidades">
+          <label class="check-item"><input type="checkbox" value="TDAH"> TDAH</label>
+          <label class="check-item"><input type="checkbox" value="Epilepsia"> Epilepsia</label>
+          <label class="check-item"><input type="checkbox" value="Ansiedade"> Ansiedade</label>
+          <label class="check-item"><input type="checkbox" value="Def. intelectual"> Def. intelectual</label>
+          <label class="check-item"><input type="checkbox" value="Dist. do sono"> Dist. do sono</label>
+          <label class="check-item"><input type="checkbox" value="Dif. motora"> Dif. motora</label>
+          <label class="check-item"><input type="checkbox" value="Hipersensibilidade"> Hipersensibilidade</label>
+          <label class="check-item"><input type="checkbox" value="Transt. alimentar"> Transt. alimentar</label>
+          <label class="check-item"><input type="checkbox" value="Outra"> Outra</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="mf-section">
+      <div class="mf-section-hdr">Acesso a terapias</div>
+      <div class="mf-body-inner">
+        <div class="check-grid-2" id="mf-terapias" style="margin-bottom:1.25rem">
+          <label class="check-item"><input type="checkbox" value="ABA"> ABA / Análise Comportamental</label>
+          <label class="check-item"><input type="checkbox" value="Fonoaudiologia"> Fonoaudiologia</label>
+          <label class="check-item"><input type="checkbox" value="T. Ocupacional"> Terapia Ocupacional</label>
+          <label class="check-item"><input type="checkbox" value="Psicologia"> Psicologia / Psiquiatria</label>
+          <label class="check-item"><input type="checkbox" value="Equoterapia"> Equoterapia</label>
+          <label class="check-item"><input type="checkbox" value="Musicoterapia"> Musicoterapia</label>
+          <label class="check-item"><input type="checkbox" value="Nenhuma terapia"> Nenhuma terapia</label>
+          <label class="check-item"><input type="checkbox" value="Outras"> Outras</label>
+        </div>
+        <div class="mf-row">
+          <div class="mf-field"><label class="mf-label">Fonte de custeio</label>
+            <select id="mf-custeio" class="mf-input">
+              <option value="">Selecione</option>
+              <option>Plano de saúde</option><option>SUS / APAE</option><option>Particular</option><option>Misto</option>
+            </select>
+          </div>
+          <div class="mf-field"><label class="mf-label">Horas semanais</label><input type="number" id="mf-horas" class="mf-input" placeholder="Ex: 6" min="0" max="60"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mf-section">
+      <div class="mf-section-hdr">Situação escolar</div>
+      <div class="mf-body-inner">
+        <div class="check-grid-2" id="mf-escola-tipo" style="margin-bottom:1.25rem">
+          <label class="radio-card"><input type="radio" name="escola" value="Rede pública — inclusão"> Rede pública — inclusão</label>
+          <label class="radio-card"><input type="radio" name="escola" value="Rede pública — especial / APAE"> Rede pública — especial / APAE</label>
+          <label class="radio-card"><input type="radio" name="escola" value="Rede particular"> Rede particular</label>
+          <label class="radio-card"><input type="radio" name="escola" value="Ensino domiciliar"> Ensino domiciliar</label>
+          <label class="radio-card"><input type="radio" name="escola" value="Não está matriculado"> Não está matriculado</label>
+        </div>
+        <div class="mf-row">
+          <div class="mf-field"><label class="mf-label">Acompanhante / auxiliar escolar</label>
+            <select id="mf-auxiliar" class="mf-input">
+              <option value="">Selecione</option>
+              <option>Sim, pago pelo município</option><option>Sim, pela família</option><option>Não possui</option><option>Em solicitação</option>
+            </select>
+          </div>
+          <div class="mf-field"><label class="mf-label">Nome da escola</label><input type="text" id="mf-nome-escola" class="mf-input" placeholder="Ex: E.M. João XXIII"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mf-section">
+      <div class="mf-section-hdr">Dados do responsável</div>
+      <div class="mf-body-inner">
+        <div class="mf-row">
+          <div class="mf-field"><label class="mf-label">Nome <span style="color:#A32D2D">*</span></label><input type="text" id="mf-resp-nome" class="mf-input" placeholder="Nome completo"></div>
+          <div class="mf-field"><label class="mf-label">CPF</label><input type="text" id="mf-resp-cpf" class="mf-input" placeholder="000.000.000-00"></div>
+        </div>
+        <div class="mf-row">
+          <div class="mf-field"><label class="mf-label">E-mail</label><input type="email" id="mf-resp-email" class="mf-input" placeholder="seu@email.com"></div>
+          <div class="mf-field"><label class="mf-label">WhatsApp</label><input type="tel" id="mf-resp-whatsapp" class="mf-input" placeholder="(43) 9 0000-0000"></div>
+        </div>
+        <div class="mf-row full">
+          <div class="mf-field"><label class="mf-label">Observações (opcional)</label><textarea id="mf-obs" class="mf-input" placeholder="Necessidades específicas, situação socioeconômica, etc."></textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LGPD: Consentimento explícito -->
+    <div class="mf-section" style="border-left:3px solid var(--gold)">
+      <div class="mf-section-hdr" style="color:var(--gold)">Consentimento e privacidade (LGPD)</div>
+      <div class="mf-body-inner">
+        <div style="font-size:0.82rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;font-weight:300">
+          Em conformidade com a <strong style="color:var(--ink)">Lei Geral de Proteção de Dados (Lei 13.709/2018)</strong>, informamos:
+          <ul style="margin:0.75rem 0 0.75rem 1.25rem;display:flex;flex-direction:column;gap:0.4rem">
+            <li>Os dados coletados são de natureza sensível (saúde) e referentes a menores de idade.</li>
+            <li>Serão usados <strong style="color:var(--ink)">exclusivamente</strong> para fins de mapeamento epidemiológico e apoio à gestão pública de saúde.</li>
+            <li>Nenhum dado individual será divulgado — somente estatísticas agregadas e anônimas.</li>
+            <li>Você pode solicitar a exclusão dos dados a qualquer momento pelo e-mail <strong style="color:var(--ink)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3d0dcddc7d2c7dc9ddaddd5dadddac7cac7d6d2f3d4ded2dadf9dd0dcde">[email&#160;protected]</a></strong>.</li>
+            <li>Os dados são armazenados com criptografia e acesso restrito às fundadoras da InfinityTEA.</li>
+            <li>O responsável legal declara ter autoridade para fornecer os dados da criança.</li>
+          </ul>
+        </div>
+        <label class="check-item" style="border:1px solid var(--gold);background:rgba(201,169,110,0.04)">
+          <input type="checkbox" id="mf-lgpd-1" value="lgpd1">
+          <span>Li e concordo com o uso dos dados para fins de mapeamento público de saúde, conforme descrito acima. <span style="color:#A32D2D">*</span></span>
+        </label>
+        <label class="check-item" style="margin-top:0.5rem;border:1px solid var(--border)">
+          <input type="checkbox" id="mf-lgpd-2" value="lgpd2">
+          <span>Declaro ser o responsável legal pela criança e autorizo o uso dos dados informados neste formulário. <span style="color:#A32D2D">*</span></span>
+        </label>
+        <label class="check-item" style="margin-top:0.5rem;border:1px solid var(--border)">
+          <input type="checkbox" id="mf-lgpd-3" value="lgpd3">
+          <span>Aceito receber informações sobre cursos e recursos da InfinityTEA por e-mail ou WhatsApp. (opcional)</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="mf-error" id="mf-error" style="display:none;color:#A32D2D;font-size:0.82rem;margin-bottom:1rem;padding:0.75rem 1rem;border:1px solid rgba(192,57,43,0.25);background:rgba(192,57,43,0.05)"></div>
+
+    <div class="mf-submit-area">
+      <button class="btn-mf-cancel" onclick="showPage('page-home')">Cancelar</button>
+      <button class="btn-mf-submit" id="btn-mf-submit" onclick="submitMapForm()">Enviar cadastro</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MAPAUTISMO — PAINEL DO GESTOR
+════════════════════════════════════════ -->
+<div id="page-mapautismo-gestor" class="page">
+
+<div class="gestor-wrap">
+  <div class="g-topnav">
+    <div class="g-topnav-logo">Infinity<em>TEA</em></div>
+    <div class="g-topnav-tabs">
+      <button class="g-topnav-tab" onclick="showPage('page-mapautismo-cadastro')">Cadastro — Pais</button>
+      <button class="g-topnav-tab active">Painel do Gestor</button>
+    </div>
+    <button class="g-gestor-back" onclick="showPage('page-home')">← Voltar ao site</button>
+  </div>
+
+  <div class="gestor-hdr">
+    <div>
+      <h1 id="g-header-title">MapAutismo — Paraná</h1>
+      <p id="g-header-sub">Dados agregados por município e bairro · Gestão de saúde pública</p>
+    </div>
+    <div class="gestor-hdr-right">Atualizado em 20/03/2026</div>
+  </div>
+
+  <div class="g-filter">
+    <span class="g-filter-label">Município</span>
+    <select class="g-sel" id="gf-municipio" onchange="gApplyFilters()">
+      <option value="todos">Todos</option>
+      <option value="curitiba">Curitiba</option>
+      <option value="ibaiti">Ibaiti</option>
+      <option value="londrina">Londrina</option>
+      <option value="maringa">Maringá</option>
+    </select>
+    <div class="g-sep"></div>
+    <span class="g-filter-label">Sexo</span>
+    <button class="g-chip active" id="gc-sexo-todos" onclick="gSetChip('sexo','todos')">Todos</button>
+    <button class="g-chip" id="gc-sexo-m" onclick="gSetChip('sexo','m')">Meninos</button>
+    <button class="g-chip" id="gc-sexo-f" onclick="gSetChip('sexo','f')">Meninas</button>
+    <div class="g-sep"></div>
+    <span class="g-filter-label">Rede</span>
+    <button class="g-chip active" id="gc-rede-todos" onclick="gSetChip('rede','todos')">Todas</button>
+    <button class="g-chip" id="gc-rede-pub" onclick="gSetChip('rede','pub')">Pública</button>
+    <button class="g-chip" id="gc-rede-priv" onclick="gSetChip('rede','priv')">Particular</button>
+    <div class="g-sep"></div>
+    <span class="g-filter-label">Nível</span>
+    <button class="g-chip active" id="gc-nivel-todos" onclick="gSetChip('nivel','todos')">Todos</button>
+    <button class="g-chip" id="gc-nivel-1" onclick="gSetChip('nivel','1')">N1</button>
+    <button class="g-chip" id="gc-nivel-2" onclick="gSetChip('nivel','2')">N2</button>
+    <button class="g-chip" id="gc-nivel-3" onclick="gSetChip('nivel','3')">N3</button>
+  </div>
+
+  <div class="g-metrics">
+    <div class="g-metric"><div class="lbl">Crianças</div><div class="val" id="gm-total">—</div><div class="sub" id="gm-total-sub"></div></div>
+    <div class="g-metric"><div class="lbl">Meninos / Meninas</div><div class="val" id="gm-genero">—</div><div class="sub" id="gm-genero-sub"></div></div>
+    <div class="g-metric"><div class="lbl">Rede pública (escola)</div><div class="val" id="gm-pub">—</div><div class="sub warn" id="gm-pub-sub"></div></div>
+    <div class="g-metric"><div class="lbl">Sem terapia</div><div class="val" id="gm-semterapia">—</div><div class="sub warn" id="gm-semterapia-sub"></div></div>
+  </div>
+
+  <div class="g-main">
+    <div class="g-panel">
+      <div class="g-panel-hdr">
+        <span class="g-panel-title" id="g-map-title">Distribuição por bairro</span>
+        <span class="g-panel-sub" id="g-map-sub">Paraná</span>
+      </div>
+      <div class="g-map-area" id="g-map-area"></div>
+    </div>
+    <div class="g-panel">
+      <div class="g-panel-hdr">
+        <span class="g-panel-title">Ranking de bairros</span>
+        <span class="g-panel-sub">por total filtrado</span>
+      </div>
+      <div class="g-result-count" id="g-result-count"></div>
+      <div id="g-bairros-list"></div>
+    </div>
+  </div>
+
+  <div class="g-bottom">
+    <div class="g-chart">
+      <div class="g-panel-hdr"><span class="g-panel-title">Por nível do espectro</span></div>
+      <div class="g-chart-inner">
+        <div class="g-donut-wrap">
+          <svg width="76" height="76" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="28" fill="none" stroke="#f0f0f0" stroke-width="13"/>
+            <circle id="gd-n1" cx="38" cy="38" r="28" fill="none" stroke="#5C2D8F" stroke-width="13" stroke-dasharray="88 88" stroke-dashoffset="0" transform="rotate(-90 38 38)"/>
+            <circle id="gd-n2" cx="38" cy="38" r="28" fill="none" stroke="#C9A96E" stroke-width="13" stroke-dasharray="53 123" stroke-dashoffset="-88" transform="rotate(-90 38 38)"/>
+            <circle id="gd-n3" cx="38" cy="38" r="28" fill="none" stroke="#E8D5B0" stroke-width="13" stroke-dasharray="35 141" stroke-dashoffset="-141" transform="rotate(-90 38 38)"/>
+            <text x="38" y="42" text-anchor="middle" font-size="11" fill="#1A0F2E" font-weight="500" id="gd-center">—</text>
+          </svg>
+          <div class="g-legend">
+            <div class="g-legend-row"><div class="g-legend-dot" style="background:#5C2D8F"></div><span id="gl-n1">Nível 1 · 50%</span></div>
+            <div class="g-legend-row"><div class="g-legend-dot" style="background:#C9A96E"></div><span id="gl-n2">Nível 2 · 30%</span></div>
+            <div class="g-legend-row"><div class="g-legend-dot" style="background:#E8D5B0"></div><span id="gl-n3">Nível 3 · 17%</span></div>
+            <div class="g-legend-row"><div class="g-legend-dot" style="background:#eee"></div><span id="gl-nd">N/D · 3%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="g-chart">
+      <div class="g-panel-hdr"><span class="g-panel-title">Acesso a terapias</span></div>
+      <div class="g-chart-inner">
+        <div class="g-bar-mini">
+          <div class="g-bar-item"><span class="g-bar-label">ABA</span><div class="g-bar-track"><div class="g-bar-fill" id="gb-aba" style="background:#5C2D8F"></div></div><span class="g-bar-val" id="gv-aba"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">Fonoaudiologia</span><div class="g-bar-track"><div class="g-bar-fill" id="gb-fono" style="background:#5C2D8F"></div></div><span class="g-bar-val" id="gv-fono"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">T. Ocupacional</span><div class="g-bar-track"><div class="g-bar-fill" id="gb-to" style="background:#C9A96E"></div></div><span class="g-bar-val" id="gv-to"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">Psicologia</span><div class="g-bar-track"><div class="g-bar-fill" id="gb-psi" style="background:#C9A96E"></div></div><span class="g-bar-val" id="gv-psi"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">Nenhuma</span><div class="g-bar-track"><div class="g-bar-fill" id="gb-none" style="background:#C0392B"></div></div><span class="g-bar-val" id="gv-none" style="color:#A32D2D"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="g-chart">
+      <div class="g-panel-hdr"><span class="g-panel-title">Sexo × Nível</span></div>
+      <div class="g-chart-inner">
+        <div class="g-bar-mini">
+          <div class="g-bar-item"><span class="g-bar-label">N1 — meninos</span><div class="g-bar-track"><div class="g-bar-fill" id="gx-n1m" style="background:#5C2D8F"></div></div><span class="g-bar-val" id="gxv-n1m"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">N1 — meninas</span><div class="g-bar-track"><div class="g-bar-fill" id="gx-n1f" style="background:#E8C4C4"></div></div><span class="g-bar-val" id="gxv-n1f"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">N2 — meninos</span><div class="g-bar-track"><div class="g-bar-fill" id="gx-n2m" style="background:#5C2D8F"></div></div><span class="g-bar-val" id="gxv-n2m"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">N2 — meninas</span><div class="g-bar-track"><div class="g-bar-fill" id="gx-n2f" style="background:#E8C4C4"></div></div><span class="g-bar-val" id="gxv-n2f"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">N3 — meninos</span><div class="g-bar-track"><div class="g-bar-fill" id="gx-n3m" style="background:#5C2D8F"></div></div><span class="g-bar-val" id="gxv-n3m"></span></div>
+          <div class="g-bar-item"><span class="g-bar-label">N3 — meninas</span><div class="g-bar-track"><div class="g-bar-fill" id="gx-n3f" style="background:#E8C4C4"></div></div><span class="g-bar-val" id="gxv-n3f"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- MAPAUTISMO JS -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const GDATA = {
+  curitiba:{label:"Curitiba — PR",bairros:[{name:"CIC",count:110,nivel:"N3",m:75,f:35,pub:80,pct:100},{name:"Sítio Cercado",count:95,nivel:"N3",m:62,f:33,pub:76,pct:86},{name:"Boqueirão",count:83,nivel:"N2",m:55,f:28,pub:61,pct:75},{name:"Cajuru",count:72,nivel:"N2",m:48,f:24,pub:54,pct:65},{name:"Boa Vista",count:67,nivel:"N2",m:44,f:23,pub:38,pct:61},{name:"Tatuquara",count:61,nivel:"N2",m:40,f:21,pub:50,pct:55},{name:"Portão",count:54,nivel:"N1",m:36,f:18,pub:28,pct:49},{name:"Novo Mundo",count:48,nivel:"N2",m:32,f:16,pub:35,pct:44},{name:"Xaxim",count:41,nivel:"N3",m:27,f:14,pub:33,pct:37},{name:"Sta. Felicidade",count:38,nivel:"N1",m:25,f:13,pub:18,pct:35},{name:"Hauer",count:29,nivel:"N1",m:19,f:10,pub:14,pct:26}],terapias:{aba:58,fono:71,to:44,psi:39,none:42},niveis:{n1:50,n2:30,n3:17,nd:3},sexoNivel:{n1m:36,n1f:14,n2m:22,n2f:8,n3m:12,n3f:5}},
+  ibaiti:{label:"Ibaiti — PR",bairros:[{name:"Centro",count:34,nivel:"N2",m:22,f:12,pub:30,pct:100},{name:"Jardim América",count:28,nivel:"N1",m:18,f:10,pub:24,pct:82},{name:"Vila Nova",count:22,nivel:"N2",m:14,f:8,pub:20,pct:65},{name:"São Vicente",count:17,nivel:"N3",m:11,f:6,pub:16,pct:50},{name:"Bela Vista",count:13,nivel:"N1",m:8,f:5,pub:11,pct:38},{name:"Conj. Vila Rica",count:9,nivel:"N3",m:6,f:3,pub:9,pct:26}],terapias:{aba:28,fono:52,to:19,psi:21,none:61},niveis:{n1:41,n2:34,n3:20,nd:5},sexoNivel:{n1m:30,n1f:11,n2m:24,n2f:10,n3m:14,n3f:6}},
+  londrina:{label:"Londrina — PR",bairros:[{name:"Centro",count:88,nivel:"N2",m:58,f:30,pub:60,pct:100},{name:"Gleba Palhano",count:71,nivel:"N1",m:47,f:24,pub:40,pct:81},{name:"Cinco Conjuntos",count:63,nivel:"N2",m:41,f:22,pub:55,pct:72},{name:"Vila Casoni",count:47,nivel:"N3",m:31,f:16,pub:44,pct:53},{name:"Jd. Shangri-lá",count:38,nivel:"N1",m:25,f:13,pub:22,pct:43}],terapias:{aba:52,fono:68,to:40,psi:36,none:38},niveis:{n1:48,n2:33,n3:15,nd:4},sexoNivel:{n1m:35,n1f:13,n2m:24,n2f:9,n3m:11,n3f:4}},
+  maringa:{label:"Maringá — PR",bairros:[{name:"Zona 1",count:76,nivel:"N2",m:50,f:26,pub:52,pct:100},{name:"Zona 7",count:61,nivel:"N1",m:40,f:21,pub:38,pct:80},{name:"Jd. Alvorada",count:49,nivel:"N2",m:32,f:17,pub:44,pct:64},{name:"Vila Operária",count:41,nivel:"N3",m:27,f:14,pub:40,pct:54}],terapias:{aba:55,fono:70,to:42,psi:38,none:35},niveis:{n1:51,n2:31,n3:14,nd:4},sexoNivel:{n1m:38,n1f:13,n2m:23,n2f:8,n3m:10,n3f:4}}
+};
+
+let gFilters={municipio:'todos',sexo:'todos',rede:'todos',nivel:'todos'};
+
+function gSetChip(group,val){
+  gFilters[group]=val;
+  document.querySelectorAll(`[id^="gc-${group}-"]`).forEach(b=>b.classList.remove('active'));
+  document.getElementById(`gc-${group}-${val}`).classList.add('active');
+  gRenderAll();
+}
+function gApplyFilters(){gFilters.municipio=document.getElementById('gf-municipio').value;gRenderAll();}
+
+function gGetMunis(){return gFilters.municipio==='todos'?['curitiba','ibaiti','londrina','maringa']:[gFilters.municipio];}
+
+function gRenderAll(){
+  const munis=gGetMunis();
+  let sexMul=1,redeMul=1;
+  if(gFilters.sexo==='m')sexMul=0.73;
+  if(gFilters.sexo==='f')sexMul=0.27;
+  if(gFilters.rede==='pub')redeMul=0.78;
+  if(gFilters.rede==='priv')redeMul=0.22;
+  const mul=sexMul*redeMul;
+  const nivelF=gFilters.nivel;
+  let allB=[];
+  munis.forEach(k=>{
+    GDATA[k].bairros.forEach(b=>{
+      let count=Math.round(b.count*mul);
+      if(nivelF!=='todos'){const nm=nivelF==='1'?0.50:nivelF==='2'?0.30:0.17;count=Math.round(count*nm);}
+      allB.push({...b,count,muni:k});
+    });
+  });
+  allB.sort((a,b)=>b.count-a.count);
+  const maxC=allB[0]?.count||1;
+  allB=allB.map(b=>({...b,pct:Math.round(b.count/maxC*100)}));
+  const total=allB.reduce((s,b)=>s+b.count,0);
+  document.getElementById('gm-total').textContent=total.toLocaleString('pt-BR');
+  const meninos=Math.round(total*(gFilters.sexo==='f'?0:gFilters.sexo==='m'?1:0.73));
+  const meninas=total-meninos;
+  document.getElementById('gm-genero').textContent=gFilters.sexo==='todos'?`${meninos}/${meninas}`:total.toLocaleString('pt-BR');
+  document.getElementById('gm-genero-sub').textContent=gFilters.sexo==='todos'?'73% meninos · 27% meninas':(gFilters.sexo==='m'?'apenas meninos':'apenas meninas');
+  const pub=Math.round(total*(gFilters.rede==='priv'?0:gFilters.rede==='pub'?1:0.78));
+  document.getElementById('gm-pub').textContent=pub.toLocaleString('pt-BR');
+  document.getElementById('gm-pub-sub').textContent=`${Math.round(pub/(total||1)*100)}% do total`;
+  const semT=Math.round(total*0.42);
+  document.getElementById('gm-semterapia').textContent=semT.toLocaleString('pt-BR');
+  document.getElementById('gm-semterapia-sub').textContent=`${Math.round(semT/(total||1)*100)}% sem atendimento`;
+  if(munis.length===1){document.getElementById('g-header-title').textContent=`MapAutismo — ${GDATA[munis[0]].label.split(' —')[0]}`;document.getElementById('g-map-sub').textContent=GDATA[munis[0]].label;}
+  else{document.getElementById('g-header-title').textContent='MapAutismo — Paraná';document.getElementById('g-map-sub').textContent='Todos os municípios';}
+  document.getElementById('g-result-count').innerHTML=`<strong>${allB.length}</strong> bairros · <strong>${total.toLocaleString('pt-BR')}</strong> crianças`;
+  document.getElementById('g-bairros-list').innerHTML=allB.slice(0,10).map(b=>{
+    const bc=b.nivel==='N1'?'g-badge-n1':b.nivel==='N2'?'g-badge-n2':'g-badge-n3';
+    const ml=munis.length>1?`<span style="font-size:0.65rem;color:#aaa;margin-left:4px">${b.muni.charAt(0).toUpperCase()+b.muni.slice(1,4)}.</span>`:'';
+    return `<div class="g-bairro"><span class="g-bairro-name">${b.name}${ml}</span><div class="g-bairro-bar-wrap"><div class="g-bairro-bar" style="width:${b.pct}%"></div></div><span class="g-bairro-count">${b.count}</span><span class="g-badge ${bc}">${b.nivel}</span></div>`;
+  }).join('');
+  gRenderMap(allB.slice(0,9),maxC);
+  const avgT=(key)=>Math.round(munis.reduce((s,k)=>s+GDATA[k].terapias[key],0)/munis.length);
+  ['aba','fono','to','psi','none'].forEach(k=>{const v=avgT(k);document.getElementById(`gb-${k}`).style.width=v+'%';document.getElementById(`gv-${k}`).textContent=v+'%';});
+  const avgN=(key)=>Math.round(munis.reduce((s,k)=>s+GDATA[k].niveis[key],0)/munis.length);
+  const n1=avgN('n1'),n2=avgN('n2'),n3=avgN('n3'),nd=avgN('nd');
+  const circ=2*Math.PI*28;
+  const d1=circ*n1/100,d2=circ*n2/100,d3=circ*n3/100;
+  document.getElementById('gd-n1').setAttribute('stroke-dasharray',`${d1.toFixed(1)} ${(circ-d1).toFixed(1)}`);
+  document.getElementById('gd-n1').setAttribute('stroke-dashoffset','0');
+  document.getElementById('gd-n2').setAttribute('stroke-dasharray',`${d2.toFixed(1)} ${(circ-d2).toFixed(1)}`);
+  document.getElementById('gd-n2').setAttribute('stroke-dashoffset',(-d1).toFixed(1));
+  document.getElementById('gd-n3').setAttribute('stroke-dasharray',`${d3.toFixed(1)} ${(circ-d3).toFixed(1)}`);
+  document.getElementById('gd-n3').setAttribute('stroke-dashoffset',(-(d1+d2)).toFixed(1));
+  document.getElementById('gd-center').textContent=total.toLocaleString('pt-BR');
+  document.getElementById('gl-n1').textContent=`Nível 1 · ${n1}%`;
+  document.getElementById('gl-n2').textContent=`Nível 2 · ${n2}%`;
+  document.getElementById('gl-n3').textContent=`Nível 3 · ${n3}%`;
+  document.getElementById('gl-nd').textContent=`N/D · ${nd}%`;
+  const avgSN=(key)=>Math.round(munis.reduce((s,k)=>s+GDATA[k].sexoNivel[key],0)/munis.length);
+  const sxD=['n1m','n1f','n2m','n2f','n3m','n3f'].map(k=>avgSN(k));
+  const sxMax=Math.max(...sxD);
+  ['n1m','n1f','n2m','n2f','n3m','n3f'].forEach((k,i)=>{document.getElementById(`gx-${k}`).style.width=Math.round(sxD[i]/sxMax*100)+'%';document.getElementById(`gxv-${k}`).textContent=sxD[i]+'%';});
+}
+
+function gRenderMap(bairros,maxC){
+  const cols=3,W=420,H=240;
+  const bw=Math.floor(W/cols)-4,bh=Math.floor(H/3)-4;
+  function getC(count){
+    const r=count/maxC;
+    if(r<0.25)return{fill:'rgba(92,45,143,0.08)',text:'#1A0F2E'};
+    if(r<0.5)return{fill:'rgba(92,45,143,0.18)',text:'#1A0F2E'};
+    if(r<0.75)return{fill:'rgba(92,45,143,0.4)',text:'white'};
+    if(r<0.9)return{fill:'rgba(92,45,143,0.65)',text:'white'};
+    return{fill:'#5C2D8F',text:'white'};
+  }
+  const cells=bairros.slice(0,9).map((b,i)=>{
+    const col=i%cols,row=Math.floor(i/cols);
+    const x=col*(bw+4)+2,y=row*(bh+4)+2;
+    const c=getC(b.count);
+    const sn=b.name.length>12?b.name.slice(0,11)+'.':b.name;
+    return `<g><rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="2" fill="${c.fill}" stroke="rgba(92,45,143,0.2)" stroke-width="0.5"/><text x="${x+bw/2}" y="${y+bh/2-5}" text-anchor="middle" font-size="9" fill="${c.text}" font-family="Jost,sans-serif">${sn}</text><text x="${x+bw/2}" y="${y+bh/2+8}" text-anchor="middle" font-size="11" fill="${c.text}" font-weight="600" font-family="Playfair Display,serif">${b.count}</text></g>`;
+  });
+  document.getElementById('g-map-area').innerHTML=`<svg width="100%" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${cells.join('')}</svg>`;
+}
+
+function selectNivel(el) {
+  document.querySelectorAll('.nivel-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── Coleta checkboxes/radios ───────────────────────────────────────────────
+function getChecked(containerId) {
+  return Array.from(document.querySelectorAll('#' + containerId + ' input:checked'))
+    .map(i => i.value).filter(Boolean);
+}
+function getRadio(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+
+// ── Valida e envia o formulário ────────────────────────────────────────────
+async function submitMapForm() {
+  const errEl = document.getElementById('mf-error');
+  const btn   = document.getElementById('btn-mf-submit');
+  errEl.style.display = 'none';
+
+  // Coleta dados
+  const sexo      = document.getElementById('mf-sexo')?.value;
+  const municipio = document.getElementById('mf-municipio')?.value.trim();
+  const bairro    = document.getElementById('mf-bairro')?.value.trim();
+  const nivelEl   = document.querySelector('#mf-nivel-grid .nivel-card.selected');
+  const nivel     = nivelEl ? parseInt(nivelEl.dataset.nivel) : null;
+  const respNome  = document.getElementById('mf-resp-nome')?.value.trim();
+
+  // Validação
+  const lgpd1 = document.getElementById('mf-lgpd-1')?.checked;
+  const lgpd2 = document.getElementById('mf-lgpd-2')?.checked;
+  const erros = [];
+  if (!sexo)      erros.push('Selecione o sexo da criança.');
+  if (!municipio) erros.push('Informe o município.');
+  if (!bairro)    erros.push('Informe o bairro.');
+  if (!nivel)     erros.push('Selecione o nível do espectro.');
+  if (!respNome)  erros.push('Informe o nome do responsável.');
+  if (!lgpd1)     erros.push('É necessário concordar com o uso dos dados (LGPD).');
+  if (!lgpd2)     erros.push('É necessário declarar ser o responsável legal pela criança.');
+
+  if (erros.length) {
+    errEl.innerHTML = erros.map(e => '• ' + e).join('<br>');
+    errEl.style.display = 'block';
+    errEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  const payload = {
+    nome_crianca:    document.getElementById('mf-nome-crianca')?.value.trim() || null,
+    data_nasc:       document.getElementById('mf-data-nasc')?.value || null,
+    sexo,
+    ano_diagnostico: parseInt(document.getElementById('mf-ano-diag')?.value) || null,
+    cid:             document.getElementById('mf-cid')?.value.trim() || null,
+    estado:          document.getElementById('mf-estado')?.value || 'Paraná',
+    municipio,
+    bairro,
+    nivel,
+    comorbidades:    getChecked('mf-comorbidades'),
+    terapias:        getChecked('mf-terapias'),
+    fonte_custeio:   document.getElementById('mf-custeio')?.value || null,
+    horas_terapia:   parseInt(document.getElementById('mf-horas')?.value) || null,
+    situacao_escolar: getRadio('escola'),
+    auxiliar_escolar: document.getElementById('mf-auxiliar')?.value || null,
+    nome_escola:      document.getElementById('mf-nome-escola')?.value.trim() || null,
+    resp_nome:        respNome,
+    resp_email:       document.getElementById('mf-resp-email')?.value.trim() || null,
+    resp_whatsapp:    document.getElementById('mf-resp-whatsapp')?.value.trim() || null,
+    observacoes:      document.getElementById('mf-obs')?.value.trim() || null,
+    consentimento_lgpd:    true,
+    consentimento_responsavel: true,
+    aceita_comunicacao: document.getElementById('mf-lgpd-3')?.checked || false,
+    data_consentimento: new Date().toISOString(),
+  };
+
+  btn.textContent = 'Enviando...';
+  btn.disabled    = true;
+
+  try {
+    if (MODO_LOCAL) {
+      // Mock: salva no localStorage e atualiza GDATA
+      const db  = dbGet();
+      if (!db.map_cadastros) db.map_cadastros = [];
+      db.map_cadastros.push({ ...payload, id: Date.now(), criado_em: new Date().toISOString() });
+      dbSave(db);
+      // Injeta no GDATA para o gestor ver imediatamente
+      mapaInjetarCadastro(payload);
+    } else {
+      await fetch(API + '/mapa/cadastro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(async r => {
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.erro || 'Erro ao enviar.');
+      });
+    }
+
+    // Sucesso
+    document.getElementById('mf-success').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Limpa o formulário
+    document.querySelectorAll('.mf-input').forEach(el => {
+      if (el.tagName === 'SELECT') el.selectedIndex = 0;
+      else if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+      else el.value = '';
+    });
+    document.querySelectorAll('.nivel-card').forEach((c,i) => c.classList.toggle('selected', i===0));
+    setTimeout(() => document.getElementById('mf-success').classList.remove('show'), 6000);
+  } catch(e) {
+    errEl.textContent = e.message || 'Erro ao enviar. Tente novamente.';
+    errEl.style.display = 'block';
+  }
+
+  btn.textContent = 'Enviar cadastro';
+  btn.disabled    = false;
+}
+
+// ── Injeta cadastro local no GDATA para o painel refletir ─────────────────
+function mapaInjetarCadastro(d) {
+  const muniKey = (d.municipio || 'outro').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
+
+  if (!GDATA[muniKey]) {
+    GDATA[muniKey] = {
+      label: d.municipio,
+      bairros: [], terapias:{aba:0,fono:0,to:0,psi:0,none:0},
+      niveis:{n1:0,n2:0,n3:0,nd:0}, sexoNivel:{n1m:0,n1f:0,n2m:0,n2f:0,n3m:0,n3f:0},
+      _raw: []
+    };
+  }
+  const m = GDATA[muniKey];
+  if (!m._raw) m._raw = [];
+  m._raw.push(d);
+  mapaRecalcular(muniKey);
+}
+
+function mapaRecalcular(muniKey) {
+  const m    = GDATA[muniKey];
+  const raw  = m._raw || [];
+  const tot  = raw.length || 1;
+  const bMap = {};
+
+  m.terapias    = {aba:0,fono:0,to:0,psi:0,none:0};
+  m.niveis      = {n1:0,n2:0,n3:0,nd:0};
+  m.sexoNivel   = {n1m:0,n1f:0,n2m:0,n2f:0,n3m:0,n3f:0};
+
+  for (const r of raw) {
+    const b = r.bairro || 'Não informado';
+    if (!bMap[b]) bMap[b] = {name:b,count:0,m:0,f:0,pub:0};
+    bMap[b].count++;
+    if (r.sexo === 'Masculino') bMap[b].m++; else bMap[b].f++;
+    if ((r.situacao_escolar||'').includes('pública')) bMap[b].pub++;
+
+    const nv = parseInt(r.nivel);
+    const nk = nv===1?'n1':nv===2?'n2':nv===3?'n3':'nd';
+    m.niveis[nk]++;
+    const sk = r.sexo==='Masculino'?'m':'f';
+    if (nk!=='nd') m.sexoNivel[nk+sk]++;
+
+    const t = r.terapias || [];
+    if (t.some(x=>x.toLowerCase().includes('nenhuma'))) m.terapias.none++;
+    if (t.some(x=>x.toLowerCase().includes('aba')))     m.terapias.aba++;
+    if (t.some(x=>x.toLowerCase().includes('fono')))    m.terapias.fono++;
+    if (t.some(x=>x.toLowerCase().includes('ocup')))    m.terapias.to++;
+    if (t.some(x=>x.toLowerCase().includes('psic')))    m.terapias.psi++;
+  }
+
+  // Para percentual
+  Object.keys(m.terapias).forEach(k => m.terapias[k] = Math.round(m.terapias[k]/tot*100));
+  Object.keys(m.niveis).forEach(k   => m.niveis[k]   = Math.round(m.niveis[k]  /tot*100));
+
+  const bArr   = Object.values(bMap).sort((a,b)=>b.count-a.count);
+  const maxC   = bArr[0]?.count || 1;
+  m.bairros    = bArr.map(b => ({...b, nivel: b.count/maxC>0.66?'N3':b.count/maxC>0.33?'N2':'N1', pct:Math.round(b.count/maxC*100)}));
+}
+
+// ── Carrega dados do backend para o painel (quando não for MODO_LOCAL) ─────
+async function mapaCarregarDados(filters = {}) {
+  if (MODO_LOCAL) {
+    // Recarrega do localStorage
+    const db = dbGet();
+    const cadastros = db.map_cadastros || [];
+    // Reinicia GDATA mantendo hardcoded + adiciona dados locais
+    cadastros.forEach(d => mapaInjetarCadastro(d));
+    return;
+  }
+
+  const token  = getToken() || (window._GESTOR_TOKEN || 'gestor2025');
+  const params = new URLSearchParams(filters).toString();
+  try {
+    const res  = await fetch(API + '/mapa/dados?' + params, {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    const data = await res.json();
+    if (!res.ok) { console.warn('Mapa dados error:', data); return; }
+    // Mescla dados do banco no GDATA
+    for (const [key, muni] of Object.entries(data.municipios || {})) {
+      GDATA[key] = muni;
+    }
+  } catch(e) {
+    console.warn('Falha ao buscar dados do mapa:', e);
+  }
+}
+
+
+// ─── CURSOR ───
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px';
+  ring.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a,button,[onclick]').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    ring.style.transform = 'translate(-50%,-50%) scale(1.8)';
+    ring.style.borderColor = 'var(--gold)';
+    cur.style.background = 'var(--plum)';
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.borderColor = 'var(--gold)';
+    cur.style.background = 'var(--gold)';
+  });
+});
+
+// ─── SCROLL ANIMATIONS ───
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = (i * 0.1) + 's';
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.anim').forEach(el => observer.observe(el));
+
+// ─── DATA ───
+const DEMO = { email:'aluno@demo.com', senha:'123456', nome:'Aluno Demo' };
+let user = null;
+
+const CURSOS = {
+  'tea-escola': {
+    nome: 'TEA na Escola',
+    aulas: [
+      { t:'Introdução ao TEA', d:'12 min', url:'' },
+      { t:'Sinais e diagnóstico precoce', d:'18 min', url:'' },
+      { t:'Inclusão escolar: fundamentos', d:'20 min', url:'' },
+      { t:'Estratégias pedagógicas práticas', d:'22 min', url:'' },
+      { t:'Comunicação alternativa', d:'16 min', url:'' },
+      { t:'Relação família-escola', d:'14 min', url:'' },
+      { t:'Adaptações curriculares', d:'19 min', url:'' },
+      { t:'Certificação final', d:'10 min', url:'' },
+    ]
+  },
+  'tea-saude': {
+    nome: 'TEA na Saúde',
+    aulas: [
+      { t:'O que todo profissional precisa saber', d:'15 min', url:'' },
+      { t:'Comorbidades frequentes no TEA', d:'20 min', url:'' },
+      { t:'Atendimento humanizado', d:'18 min', url:'' },
+      { t:'Comunicação com o paciente', d:'16 min', url:'' },
+      { t:'Adaptação do ambiente clínico', d:'14 min', url:'' },
+      { t:'Abordagem com familiares', d:'12 min', url:'' },
+      { t:'Casos clínicos comentados', d:'25 min', url:'' },
+      { t:'Rede de apoio e encaminhamentos', d:'13 min', url:'' },
+      { t:'Saúde mental e TEA', d:'17 min', url:'' },
+      { t:'Certificação final', d:'8 min', url:'' },
+    ]
+  },
+  'comunicacao': {
+    nome: 'Comunicação e Empatia',
+    aulas: [
+      { t:'Comunicação no espectro autista', d:'14 min', url:'https://drive.google.com/file/d/1e8IFKdihwJ-AKfpztZy2cBnz4ofOPXUv/view?usp=drive_link' },
+      { t:'Comunicação alternativa e ampliada', d:'18 min', url:'' },
+      { t:'Desenvolvendo empatia real', d:'16 min', url:'' },
+      { t:'Comunicação no ambiente doméstico', d:'20 min', url:'' },
+      { t:'Rotinas, previsibilidade e segurança', d:'15 min', url:'' },
+      { t:'Certificação final', d:'8 min', url:'' },
+    ]
+  }
+};
+
+// Converte qualquer link do Drive pro formato embed
+function driveEmbed(url) {
+  if (!url) return '';
+  const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return 'https://drive.google.com/file/d/' + m[1] + '/preview';
+  const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m2) return 'https://drive.google.com/file/d/' + m2[1] + '/preview';
+  if (url.includes('/preview')) return url;
+  return '';
+}
+
+function renderScreen(a, i, c) {
+  const embed = driveEmbed(a.url);
+  const screen = document.querySelector('.player-screen');
+  if (embed) {
+    screen.innerHTML = '<iframe src="' + embed + '" width="100%" height="100%" frameborder="0" allowfullscreen allow="autoplay"></iframe>';
+  } else {
+    screen.innerHTML = '<div class="player-placeholder"><div class="player-placeholder-icon"><svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.15)"><polygon points="5 3 19 12 5 21 5 3"/></svg></div><p style="margin-bottom:0.5rem">Nenhum vídeo vinculado</p><p style="font-size:0.65rem;color:rgba(255,255,255,0.15);max-width:280px;line-height:1.6">Adicione o link do Drive no campo url da aula "' + a.t + '"</p></div>';
+  }
+  document.getElementById('player-lesson-title').textContent = a.t;
+  document.getElementById('player-lesson-meta').textContent  = c.nome + ' · Aula ' + (i+1) + ' · ' + a.d;
+}
+
+function openPlayer(id) {
+  if (window._alunoData && !window._alunoData.admin) {
+    const liberados = window._alunoData.cursos || [];
+    if (!liberados.includes(id)) { showNotif('Você não tem acesso a este curso.'); return; }
+  }
+  const c = CURSOS[id]; if (!c) return;
+  document.getElementById('player-course-label').textContent = c.nome;
+  document.getElementById('pl-header').textContent = c.nome;
+  document.getElementById('player-lesson-title').textContent = c.nome;
+  document.getElementById('player-lesson-meta').textContent  = '';
+  const cont = document.getElementById('pl-items');
+  cont.innerHTML = '';
+  c.aulas.forEach((a, i) => {
+    const el = document.createElement('div');
+    el.className = 'pl-item' + (i === 0 ? ' active' : '');
+    const dot = a.url ? '<span style="width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-left:auto"></span>' : '';
+    el.innerHTML = '<div class="pl-num">' + String(i+1).padStart(2,'0') + '</div><div style="flex:1"><div class="pl-title">' + a.t + '</div><div class="pl-dur">' + a.d + (a.url ? ' · Drive' : '') + '</div></div>' + dot;
+    el.onclick = () => {
+      document.querySelectorAll('.pl-item').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      renderScreen(a, i, c);
+    };
+    cont.appendChild(el);
+  });
+  renderScreen(c.aulas[0], 0, c);
+  showPage('page-player');
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// CONFIGURAÇÃO DO BACKEND
+// Troque pela URL real após fazer deploy no Railway
+// ══════════════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════════════
+// CONFIGURAÇÃO
+// Quando o backend Railway estiver no ar, troque para a URL real e
+// mude MODO_LOCAL para false.
+// ══════════════════════════════════════════════════════════════════════════
+const API        = 'https://SEU-PROJETO.up.railway.app'; // URL do Railway
+const MODO_LOCAL = true; // true = mock local | false = backend real
+
+const CURSO_DEMO = 'comunicacao'; // curso liberado no cadastro grátis
+
+const CURSOS_META = {
+  'tea-escola':  { nome: 'TEA na Escola',        cat: 'Educação'    },
+  'tea-saude':   { nome: 'TEA na Saúde',          cat: 'Saúde'       },
+  'comunicacao': { nome: 'Comunicação e Empatia', cat: 'Comunicação' },
+};
+
+// ── Token / sessão ─────────────────────────────────────────────────────────
+function getToken()   { return localStorage.getItem('itea_token'); }
+function setToken(t)  { localStorage.setItem('itea_token', t); }
+function clearToken() { localStorage.removeItem('itea_token'); localStorage.removeItem('itea_user'); }
+function setUserData(d) { localStorage.setItem('itea_user', JSON.stringify(d)); }
+function getUserData()  { try { return JSON.parse(localStorage.getItem('itea_user')); } catch { return null; } }
+
+// ── DB local (mock) ────────────────────────────────────────────────────────
+function dbGet()  { try { return JSON.parse(localStorage.getItem('itea_db') || '{"alunos":[]}'); } catch { return {alunos:[]}; } }
+function dbSave(db) { localStorage.setItem('itea_db', JSON.stringify(db)); }
+function dbNextId(arr) { return arr.length ? Math.max(...arr.map(a=>a.id)) + 1 : 1; }
+
+// Garante que o admin de demo existe no DB local
+(function seedAdmin() {
+  const db = dbGet();
+  if (!db.alunos.find(a => a.admin)) {
+    db.alunos.push({
+      id: 1, nome: 'Admin InfinityTEA',
+      email: 'admin@infinitytea.com.br',
+      senha: 'admin123', // só no mock — no backend real fica como hash
+      admin: true, ativo: true, cursos: [],
+    });
+    dbSave(db);
+  }
+})();
+
+// ── Mock de API ────────────────────────────────────────────────────────────
+async function mockFetch(path, opts) {
+  const method = opts?.method || 'GET';
+  const body   = opts?.body || {};
+  const token  = getToken();
+  const db     = dbGet();
+
+  // Resolve usuário logado pelo token (token = email no mock)
+  const me = token ? db.alunos.find(a => a.email === token) : null;
+
+  // ── POST /auth/register ──
+  if (path === '/auth/register' && method === 'POST') {
+    const { nome, email, senha } = body;
+    if (!nome || !email || !senha)       throw new Error('Preencha todos os campos.');
+    if (senha.length < 6)                throw new Error('Senha deve ter no mínimo 6 caracteres.');
+    if (db.alunos.find(a=>a.email===email.toLowerCase().trim()))
+                                         throw new Error('Este e-mail já está cadastrado.');
+    const aluno = {
+      id: dbNextId(db.alunos),
+      nome: nome.trim(),
+      email: email.toLowerCase().trim(),
+      senha,
+      admin: false, ativo: true,
+      cursos: CURSO_DEMO ? [CURSO_DEMO] : [],
+    };
+    db.alunos.push(aluno);
+    dbSave(db);
+    return { token: aluno.email, aluno: { id:aluno.id, nome:aluno.nome, email:aluno.email, admin:false, cursos:aluno.cursos } };
+  }
+
+  // ── POST /auth/login ──
+  if (path === '/auth/login' && method === 'POST') {
+    const { email, senha } = body;
+    const aluno = db.alunos.find(a => a.email === email?.toLowerCase().trim());
+    if (!aluno)       throw new Error('E-mail ou senha incorretos.');
+    if (!aluno.ativo) throw new Error('Acesso suspenso. Entre em contato com a InfinityTEA.');
+    if (aluno.senha !== senha) throw new Error('E-mail ou senha incorretos.');
+    return { token: aluno.email, aluno: { id:aluno.id, nome:aluno.nome, email:aluno.email, admin:aluno.admin, cursos:aluno.cursos||[] } };
+  }
+
+  // ── POST /auth/reset-senha ──
+  if (path === '/auth/reset-senha' && method === 'POST') {
+    return { ok: true }; // no mock só simula
+  }
+
+  // ── GET /aluno/me ──
+  if (path === '/aluno/me' && method === 'GET') {
+    if (!me) throw new Error('Não autenticado.');
+    return { id:me.id, nome:me.nome, email:me.email, admin:me.admin, cursos:me.cursos||[] };
+  }
+
+  // ── PATCH /aluno/me ──
+  if (path === '/aluno/me' && method === 'PATCH') {
+    if (!me) throw new Error('Não autenticado.');
+    me.nome = body.nome || me.nome;
+    dbSave(db);
+    return { ok: true };
+  }
+
+  // ── PATCH /aluno/senha ──
+  if (path === '/aluno/senha' && method === 'PATCH') {
+    if (!me) throw new Error('Não autenticado.');
+    if (me.senha !== body.senhaAtual) throw new Error('Senha atual incorreta.');
+    if (body.novaSenha.length < 6)    throw new Error('Mínimo 6 caracteres.');
+    me.senha = body.novaSenha;
+    dbSave(db);
+    return { ok: true };
+  }
+
+  // ── GET /admin/alunos ──
+  if (path === '/admin/alunos' && method === 'GET') {
+    if (!me?.admin) throw new Error('Acesso restrito.');
+    return db.alunos.filter(a => !a.admin).map(a => ({
+      id:a.id, nome:a.nome, email:a.email, ativo:a.ativo, cursos:a.cursos||[]
+    }));
+  }
+
+  // ── POST /admin/alunos ──
+  if (path === '/admin/alunos' && method === 'POST') {
+    if (!me?.admin) throw new Error('Acesso restrito.');
+    const { nome, email, senha, cursos } = body;
+    if (!nome||!email||!senha)          throw new Error('Nome, e-mail e senha obrigatórios.');
+    if (senha.length < 6)               throw new Error('Senha mínimo 6 caracteres.');
+    if (db.alunos.find(a=>a.email===email.toLowerCase().trim()))
+                                        throw new Error('E-mail já cadastrado.');
+    const aluno = { id:dbNextId(db.alunos), nome:nome.trim(), email:email.toLowerCase().trim(), senha, admin:false, ativo:true, cursos:cursos||[] };
+    db.alunos.push(aluno);
+    dbSave(db);
+    return { ok:true, id:aluno.id };
+  }
+
+  // ── PUT /admin/alunos/:id/cursos ──
+  if (path.match(/\/admin\/alunos\/\d+\/cursos/) && method === 'PUT') {
+    if (!me?.admin) throw new Error('Acesso restrito.');
+    const id = parseInt(path.split('/')[3]);
+    const aluno = db.alunos.find(a=>a.id===id);
+    if (!aluno) throw new Error('Aluno não encontrado.');
+    aluno.cursos = body.cursos || [];
+    dbSave(db);
+    return { ok:true };
+  }
+
+  // ── PATCH /admin/alunos/:id/status ──
+  if (path.match(/\/admin\/alunos\/\d+\/status/) && method === 'PATCH') {
+    if (!me?.admin) throw new Error('Acesso restrito.');
+    const id = parseInt(path.split('/')[3]);
+    const aluno = db.alunos.find(a=>a.id===id);
+    if (!aluno) throw new Error('Aluno não encontrado.');
+    aluno.ativo = body.ativo;
+    dbSave(db);
+    return { ok:true };
+  }
+
+  // ── DELETE /admin/alunos/:id ──
+  if (path.match(/\/admin\/alunos\/\d+$/) && method === 'DELETE') {
+    if (!me?.admin) throw new Error('Acesso restrito.');
+    const id = parseInt(path.split('/')[3]);
+    db.alunos = db.alunos.filter(a=>a.id!==id);
+    dbSave(db);
+    return { ok:true };
+  }
+
+  throw new Error('Rota não encontrada: ' + path);
+}
+
+// ── apiFetch: usa mock ou backend real dependendo de MODO_LOCAL ─────────────
+async function apiFetch(path, opts = {}) {
+  if (MODO_LOCAL) return mockFetch(path, opts);
+
+  const token = getToken();
+  const res = await fetch(API + path, {
+    ...opts,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { 'Authorization': 'Bearer ' + token } : {}),
+      ...(opts.headers || {}),
+    },
+    body: opts.body ? JSON.stringify(opts.body) : undefined,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.erro || 'Erro na requisição.');
+  return data;
+}
+
+// ── Login ──────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const email = document.getElementById('l-email').value.trim();
+  const senha = document.getElementById('l-senha').value;
+  const btn   = document.getElementById('btn-entrar');
+  showLoginErr('');
+
+  if (!email || !senha) { showLoginErr('Preencha e-mail e senha.'); return; }
+
+  btn.textContent = 'Entrando...';
+  btn.disabled    = true;
+
+  try {
+    const data = await apiFetch('/auth/login', { method: 'POST', body: { email, senha } });
+    setToken(data.token);
+    setUserData(data.aluno);
+    loadDash(data.aluno);
+  } catch(e) {
+    showLoginErr(e.message);
+  } finally {
+    btn.textContent = 'Entrar na plataforma';
+    btn.disabled    = false;
+  }
+}
+
+function showLoginErr(msg) {
+  const el = document.getElementById('l-error');
+  el.textContent = msg;
+  el.style.display = msg ? 'block' : 'none';
+}
+
+// ── Cadastro (aba "Criar conta") ───────────────────────────────────────────
+// Nota: só funciona se o admin pré-cadastrou o aluno.
+// O formulário de cadastro foi mantido para o aluno definir sua senha
+// caso receba um convite com senha provisória que queira trocar.
+
+// ── Cadastro ──────────────────────────────────────────────────────────────
+async function doRegister() {
+  const nome  = document.getElementById('c-nome').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const senha = document.getElementById('c-senha').value;
+  const btn   = document.getElementById('btn-cadastrar');
+  const err   = document.getElementById('c-error');
+  err.textContent = ''; err.style.display = 'none';
+
+  if (!nome)           { showCadErr('Digite seu nome completo.'); return; }
+  if (!email)          { showCadErr('Digite seu e-mail.'); return; }
+  if (senha.length < 6){ showCadErr('Senha deve ter no mínimo 6 caracteres.'); return; }
+
+  btn.textContent = 'Criando conta...';
+  btn.disabled    = true;
+
+  try {
+    const data = await apiFetch('/auth/register', { method: 'POST', body: { nome, email, senha } });
+    setToken(data.token);
+    setUserData(data.aluno);
+    loadDash(data.aluno);
+  } catch(e) {
+    showCadErr(e.message);
+  } finally {
+    btn.textContent = 'Criar conta grátis';
+    btn.disabled    = false;
+  }
+}
+
+function showCadErr(msg) {
+  const el = document.getElementById('c-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ── Reset de senha ─────────────────────────────────────────────────────────
+async function doResetSenha() {
+  const emailEl = document.getElementById('l-reset-email') || document.getElementById('l-email');
+  const email   = emailEl?.value.trim();
+  if (!email) {
+    const errEl = document.getElementById('l-error-reset') || document.getElementById('l-error');
+    if(errEl){ errEl.textContent='Digite seu e-mail.'; errEl.style.display='block'; }
+    return;
+  }
+  try {
+    await apiFetch('/auth/reset-senha', { method: 'POST', body: { email } });
+    showNotif('Se o e-mail estiver cadastrado, você receberá as instruções em breve.');
+  } catch(e) {
+    showLoginErr('Não foi possível processar. Tente novamente.');
+  }
+}
+
+// ── Logout ─────────────────────────────────────────────────────────────────
+function doLogout() {
+  clearToken();
+  showPage('page-home');
+}
+
+// ── Auto-login ao carregar (token salvo) ───────────────────────────────────
+async function checkAutoLogin() {
+  const token = getToken();
+  if (!token) return;
+  try {
+    const data = await apiFetch('/aluno/me');
+    setUserData(data);
+    const cur = document.querySelector('.page.active');
+    if (!cur || cur.id === 'page-login' || cur.id === 'page-home') {
+      loadDash(data);
+    }
+  } catch {
+    clearToken(); // Token expirado
+  }
+}
+
+// ── Carregar dashboard ─────────────────────────────────────────────────────
+function loadDash(data) {
+  if (!data) data = getUserData();
+  if (!data) { showPage('page-login'); return; }
+
+  if (data.admin) {
+    showPage('page-admin');
+    adminLoadAlunos();
+    return;
+  }
+
+  const first = (data.nome || 'Aluno').split(' ')[0];
+  const init  = first[0].toUpperCase();
+
+  document.getElementById('dash-hello').textContent    = first + '.';
+  document.getElementById('dash-uname').textContent    = data.nome || '';
+  document.getElementById('dash-initials').textContent = init;
+  document.getElementById('p-uname').textContent       = data.nome || '';
+  document.getElementById('p-initials').textContent    = init;
+  document.getElementById('p-avatar').textContent      = init;
+  document.getElementById('p-name-big').textContent    = data.nome || '';
+  document.getElementById('p-nome-input').value        = data.nome || '';
+  document.getElementById('p-email-input').value       = data.email || '';
+
+  const cursos = data.cursos || [];
+  document.getElementById('dash-stat-total').textContent = cursos.length;
+
+  const container = document.getElementById('dash-cursos-list');
+  if (cursos.length === 0) {
+    container.innerHTML = `<div style="color:var(--muted);font-size:0.85rem;padding:2rem 0;font-weight:300;border-top:1px solid var(--border)">
+      Você ainda não tem nenhum curso liberado.<br>
+      <span style="font-size:0.8rem">Entre em contato: contato.infinitytea@gmail.com</span>
+    </div>`;
+  } else {
+    container.innerHTML = cursos.map(id => {
+      const m = CURSOS_META[id];
+      if (!m) return '';
+      return `<div class="dash-curso-row" onclick="openPlayer('${id}')">
+        <div class="dash-curso-cat">${m.cat}</div>
+        <div class="dash-curso-name">${m.nome}</div>
+        <div class="dash-prog-bar"><div class="dash-prog-fill" style="width:0%"></div></div>
+        <div class="dash-curso-prog">0%</div>
+        <button class="btn-watch">Assistir</button>
+      </div>`;
+    }).join('');
+  }
+
+  showPage('page-dashboard');
+}
+
+// ── Salvar perfil ──────────────────────────────────────────────────────────
+async function savePerfil() {
+  const nome = document.getElementById('p-nome-input').value.trim();
+  if (!nome) { showNotif('Digite um nome válido.'); return; }
+  try {
+    await apiFetch('/aluno/me', { method: 'PATCH', body: { nome } });
+    const data = getUserData();
+    data.nome = nome;
+    setUserData(data);
+    const first = nome.split(' ')[0];
+    const init  = first[0].toUpperCase();
+    document.getElementById('dash-hello').textContent    = first + '.';
+    document.getElementById('dash-uname').textContent    = nome;
+    document.getElementById('dash-initials').textContent = init;
+    document.getElementById('p-uname').textContent       = nome;
+    document.getElementById('p-avatar').textContent      = init;
+    document.getElementById('p-name-big').textContent    = nome;
+    showNotif('Perfil atualizado.');
+  } catch(e) {
+    showNotif('Erro ao salvar. Tente novamente.');
+  }
+}
+
+// ── Alterar senha (perfil) ─────────────────────────────────────────────────
+async function doAlterarSenha() {
+  const atual = document.getElementById('p-senha-atual')?.value;
+  const nova  = document.getElementById('p-senha-nova')?.value;
+  if (!atual || !nova) { showNotif('Preencha os campos de senha.'); return; }
+  try {
+    await apiFetch('/aluno/senha', { method: 'PATCH', body: { senhaAtual: atual, novaSenha: nova } });
+    document.getElementById('p-senha-atual').value = '';
+    document.getElementById('p-senha-nova').value  = '';
+    showNotif('Senha alterada com sucesso.');
+  } catch(e) {
+    showNotif(e.message);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════════════════════════════════════
+async function adminLoadAlunos() {
+  const wrap = document.getElementById('admin-alunos-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '<div class="admin-empty">Carregando...</div>';
+  try {
+    const alunos = await apiFetch('/admin/alunos');
+    if (!alunos.length) {
+      wrap.innerHTML = '<div class="admin-empty">Nenhum aluno cadastrado ainda.</div>';
+      return;
+    }
+    let rows = '';
+    for (const a of alunos) {
+      const cursosStr = (a.cursos || []).map(c =>
+        `<span class="curso-tag">${CURSOS_META[c]?.nome || c}</span>`
+      ).join('') || '<span style="color:var(--muted);font-size:0.78rem">Nenhum</span>';
+      const statusLabel = a.ativo
+        ? '<span style="color:#27500A;font-size:0.72rem;font-weight:600">Ativo</span>'
+        : '<span style="color:#A32D2D;font-size:0.72rem;font-weight:600">Suspenso</span>';
+      rows += `<tr>
+        <td>${a.nome || '—'}</td>
+        <td style="color:var(--muted)">${a.email}</td>
+        <td>${cursosStr}</td>
+        <td>${statusLabel}</td>
+        <td>
+          <button class="btn-admin-edit" onclick="adminEditarCursos(${a.id},'${a.nome}',${JSON.stringify(a.cursos||[])})">Cursos</button>
+          <button class="btn-admin-edit" onclick="adminToggleAtivo(${a.id},'${a.nome}',${a.ativo})">${a.ativo?'Suspender':'Reativar'}</button>
+          <button class="btn-admin-del"  onclick="adminRemoverAluno(${a.id},'${a.nome}')">Remover</button>
+        </td>
+      </tr>`;
+    }
+    wrap.innerHTML = `<table class="admin-table">
+      <thead><tr><th>Nome</th><th>E-mail</th><th>Cursos</th><th>Status</th><th>Ações</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  } catch(e) {
+    wrap.innerHTML = `<div class="admin-empty">Erro ao carregar: ${e.message}</div>`;
+  }
+}
+
+async function adminAddAluno() {
+  const nome   = document.getElementById('a-nome').value.trim();
+  const email  = document.getElementById('a-email').value.trim();
+  const senha  = document.getElementById('a-senha').value.trim();
+  const msg    = document.getElementById('admin-msg');
+  const cursos = ['tea-escola','tea-saude','comunicacao'].filter(id =>
+    document.getElementById('chk-' + id)?.checked
+  );
+
+  msg.className = 'admin-msg';
+  if (!nome || !email || senha.length < 6) {
+    msg.textContent = 'Preencha nome, e-mail e senha (mínimo 6 caracteres).';
+    msg.className = 'admin-msg err'; return;
+  }
+
+  const btn = document.querySelector('.btn-admin-add');
+  btn.textContent = 'Cadastrando...'; btn.disabled = true;
+
+  try {
+    await apiFetch('/admin/alunos', { method: 'POST', body: { nome, email, senha, cursos } });
+    msg.textContent = `Aluno "${nome}" cadastrado com sucesso!`;
+    msg.className = 'admin-msg ok';
+    ['a-nome','a-email','a-senha'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+    ['tea-escola','tea-saude','comunicacao'].forEach(id => { const el = document.getElementById('chk-'+id); if(el) el.checked = false; });
+    await adminLoadAlunos();
+  } catch(e) {
+    msg.textContent = e.message;
+    msg.className = 'admin-msg err';
+  }
+  btn.textContent = 'Cadastrar aluno'; btn.disabled = false;
+}
+
+async function adminEditarCursos(id, nome, cursosAtuais) {
+  const todos = ['tea-escola','tea-saude','comunicacao'];
+  const lista = todos.map((c,i) =>
+    `${i+1} - ${CURSOS_META[c].nome}${cursosAtuais.includes(c)?' ✓':''}`
+  ).join('\n');
+  const resp = prompt(`Editar cursos de "${nome}".\n\nDigite os números separados por vírgula:\n${lista}\n\nExemplo: 1,3`);
+  if (resp === null) return;
+  const map = {'1':'tea-escola','2':'tea-saude','3':'comunicacao'};
+  const novos = resp.split(',').map(s => map[s.trim()]).filter(Boolean);
+  try {
+    await apiFetch(`/admin/alunos/${id}/cursos`, { method: 'PUT', body: { cursos: novos } });
+    showNotif(`Cursos de "${nome}" atualizados.`);
+    await adminLoadAlunos();
+  } catch(e) { showNotif('Erro: ' + e.message); }
+}
+
+async function adminToggleAtivo(id, nome, ativoAtual) {
+  const acao = ativoAtual ? 'suspender' : 'reativar';
+  if (!confirm(`Deseja ${acao} o acesso de "${nome}"?`)) return;
+  try {
+    await apiFetch(`/admin/alunos/${id}/status`, { method: 'PATCH', body: { ativo: !ativoAtual } });
+    showNotif(`Acesso de "${nome}" ${ativoAtual ? 'suspenso' : 'reativado'}.`);
+    await adminLoadAlunos();
+  } catch(e) { showNotif('Erro: ' + e.message); }
+}
+
+async function adminRemoverAluno(id, nome) {
+  if (!confirm(`Remover permanentemente o aluno "${nome}"? Esta ação não pode ser desfeita.`)) return;
+  try {
+    await apiFetch(`/admin/alunos/${id}`, { method: 'DELETE' });
+    showNotif(`Aluno "${nome}" removido.`);
+    await adminLoadAlunos();
+  } catch(e) { showNotif('Erro: ' + e.message); }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════════════════════════════════════════
+// ── LGPD: solicitar exclusão de dados ─────────────────────────────────────
+async function showMapLgpd() {
+  const email = prompt('Para solicitar a exclusão dos seus dados do MapAutismo, informe o e-mail cadastrado:');
+  if (!email) return;
+  try {
+    if (MODO_LOCAL) {
+      showNotif('Solicitação registrada. Seus dados serão excluídos em até 15 dias úteis.');
+      return;
+    }
+    const res = await fetch(API + '/lgpd/solicitar-exclusao', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email.trim(), tipo: 'mapa' }),
+    });
+    const data = await res.json();
+    showNotif(data.msg || 'Solicitação registrada com sucesso.');
+  } catch(e) {
+    showNotif('Erro ao registrar. Envie um e-mail para contato.infinitytea@gmail.com.');
+  }
+}
+
+// Also add LGPD mock to apiFetch/mockFetch
+// (deletion request is handled by showMapLgpd directly above)
+
+// ══════════════════════════════════════════════════════════════════════════
+// ADMIN — ABAS
+// ══════════════════════════════════════════════════════════════════════════
+function adminSwitchTab(tab) {
+  ['alunos','videos'].forEach(t => {
+    document.getElementById('atab-' + t)?.classList.toggle('active', t === tab);
+    document.getElementById('atab-content-' + t)?.classList.toggle('active', t === tab);
+  });
+  if (tab === 'videos') adminRenderVideos();
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// ADMIN — VÍDEOS DOS CURSOS
+// ══════════════════════════════════════════════════════════════════════════
+
+// Carrega URLs salvas do localStorage (ou backend no futuro)
+function videoGetSalvos() {
+  try { return JSON.parse(localStorage.getItem('itea_video_urls') || '{}'); } catch { return {}; }
+}
+function videoSalvar(urls) {
+  localStorage.setItem('itea_video_urls', JSON.stringify(urls));
+  // No modo real: POST /admin/videos com os urls
+  if (!MODO_LOCAL) {
+    apiFetch('/admin/videos', { method: 'POST', body: { urls } }).catch(console.warn);
+  }
+}
+
+// Aplica URLs salvas ao objeto CURSOS (chamado ao iniciar)
+function videoAplicarSalvos() {
+  const salvo = videoGetSalvos();
+  for (const [cursoId, aulas] of Object.entries(salvo)) {
+    if (!CURSOS[cursoId]) continue;
+    CURSOS[cursoId].aulas.forEach((a, i) => {
+      if (aulas[i]) a.url = aulas[i];
+    });
+  }
+}
+
+// Renderiza a aba de vídeos no painel admin
+function adminRenderVideos() {
+  const wrap  = document.getElementById('admin-videos-wrap');
+  if (!wrap) return;
+  const salvo = videoGetSalvos();
+
+  wrap.innerHTML = Object.entries(CURSOS).map(([cursoId, curso]) => {
+    const urlsSalvas = salvo[cursoId] || {};
+    const comVideo   = curso.aulas.filter((a,i) => urlsSalvas[i] || a.url).length;
+    const total      = curso.aulas.length;
+
+    const rows = curso.aulas.map((aula, i) => {
+      const urlAtual  = urlsSalvas[i] || aula.url || '';
+      const hasUrl    = urlAtual.length > 0;
+      const previewUrl = hasUrl ? driveEmbed(urlAtual) : '';
+      return `<div class="video-aula-row">
+        <div>
+          <div class="video-aula-name">${String(i+1).padStart(2,'0')}. ${aula.t}</div>
+          <div class="video-aula-dur">${aula.d}</div>
+        </div>
+        <input
+          type="url"
+          class="video-url-input ${hasUrl ? 'has-url' : ''}"
+          id="vurl-${cursoId}-${i}"
+          value="${urlAtual}"
+          placeholder="https://drive.google.com/file/d/..."
+          oninput="videoOnInput(this)"
+        >
+        <a
+          class="video-preview-btn ${hasUrl ? '' : 'disabled'}"
+          id="vprev-${cursoId}-${i}"
+          href="${previewUrl || '#'}"
+          target="_blank"
+          title="Abrir prévia"
+        >Prévia</a>
+      </div>`;
+    }).join('');
+
+    return `<div class="video-curso-block">
+      <div class="video-curso-header">
+        <div class="video-curso-name">${curso.nome}</div>
+        <div class="video-count"><span>${comVideo}</span>/${total} aulas com vídeo</div>
+        <span class="video-saved-badge" id="vsaved-${cursoId}">Salvo</span>
+      </div>
+      <div class="video-hint">Cole o link do Drive. Formatos aceitos: /view, /preview, ?id=</div>
+      ${rows}
+    </div>`;
+  }).join('');
+}
+
+// Atualiza aparência e botão de prévia ao digitar
+function videoOnInput(input) {
+  const url = input.value.trim();
+  const embed = url ? driveEmbed(url) : '';
+  input.classList.toggle('has-url', url.length > 0);
+
+  // Atualiza botão de prévia
+  const parts  = input.id.replace('vurl-', '').split('-');
+  const idx    = parts.pop();
+  const cursoId = parts.join('-');
+  const prevBtn = document.getElementById('vprev-' + cursoId + '-' + idx);
+  if (prevBtn) {
+    prevBtn.classList.toggle('disabled', !embed);
+    prevBtn.href = embed || '#';
+  }
+}
+
+// Salva todos os links
+function adminSalvarVideos() {
+  const urls = {};
+  for (const cursoId of Object.keys(CURSOS)) {
+    urls[cursoId] = {};
+    CURSOS[cursoId].aulas.forEach((aula, i) => {
+      const val = document.getElementById('vurl-' + cursoId + '-' + i)?.value.trim();
+      if (val) {
+        urls[cursoId][i] = val;
+        aula.url = val; // atualiza CURSOS em tempo real
+      } else {
+        aula.url = '';
+      }
+    });
+    // Mostra badge "Salvo"
+    const badge = document.getElementById('vsaved-' + cursoId);
+    if (badge) { badge.classList.add('show'); setTimeout(() => badge.classList.remove('show'), 2500); }
+  }
+  videoSalvar(urls);
+  adminRenderVideos(); // re-renderiza pra atualizar contadores
+  const msgEl = document.getElementById('admin-videos-msg');
+  if (msgEl) {
+    msgEl.textContent = 'Links salvos com sucesso. Os vídeos já aparecem para os alunos.';
+    msgEl.className = 'admin-msg ok';
+    setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'admin-msg'; }, 4000);
+  }
+}
+
+function switchTab(tab){
+  ['entrar','cadastro','senha'].forEach(t => {
+    const btn = document.getElementById('tab-'+t);
+    if(btn) btn.classList.toggle('active', t===tab);
+  });
+  const forms = { entrar:'form-login', cadastro:'form-cadastro', senha:'form-senha' };
+  Object.entries(forms).forEach(([t, id]) => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = t===tab ? 'block' : 'none';
+  });
+  // limpa erros
+  ['l-error','c-error','l-error-reset'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el){ el.textContent=''; el.style.display='none'; }
+  });
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); window.scrollTo(0,0); }
+  if (id === 'page-mapautismo-gestor') {
+    mapaCarregarDados().then(() => gRenderAll());
+  }
+  if (id === 'page-admin') { adminLoadAlunos(); adminSwitchTab('alunos'); }
+}
+
+function scrollToSec(id) {
+  showPage('page-home');
+  setTimeout(() => { const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }, 80);
+}
+
+function showNotif(msg) {
+  const el = document.getElementById('notif');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('page-login').classList.contains('active')) doLogin();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  videoAplicarSalvos(); // aplica URLs dos vídeos salvas ant
